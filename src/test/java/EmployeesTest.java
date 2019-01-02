@@ -2,7 +2,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -20,26 +19,20 @@ class EmployeesTest {
     }
 
     @Test
-    void shouldReturnTrueWhenUserEnterValidID(){
+    void checkingWhetherTheCompareIDMethodIsCalledOrNot(){
         when(employeeMock.compareID("revathi")).thenReturn(true);
         assertTrue(employees.checkID("revathi"));
     }
 
-    @Test
-    void shouldReturnFalseWhenUserEnterInValidID(){
-        when(employeeMock.compareID("123revat")).thenReturn(false);
-        assertFalse(employees.checkID("123revat"));
-    }
 
     @Test
-    void shouldReturnTrueWhenUserEnterValidPassword(){
+    void checkingWhetherTheComparePasswordMethodIsCalledOrNot(){
         when(employeeMock.comparePassword("123456")).thenReturn(true);
         assertTrue(employees.checkPassword("123456"));
     }
 
     @Test
-    void shouldReturnFalseWhenUserEnterInValidPassword(){
-        when(employeeMock.comparePassword("99999")).thenReturn(false);
-        assertFalse(employees.checkPassword("99999"));
+    void shouldAddTheNewEmployeeToTheListCorrectly(){
+        assertTrue(employees.contains(employeeMock));
     }
 }

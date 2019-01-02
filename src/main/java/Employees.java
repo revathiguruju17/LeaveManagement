@@ -29,4 +29,8 @@ class Employees {
         }
         return false;
     }
+
+    boolean contains(Employee employeeMock) {
+        return employees.contains(employeeMock);
+    }
 }

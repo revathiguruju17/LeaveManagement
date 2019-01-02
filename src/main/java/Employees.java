@@ -12,9 +12,18 @@ public class Employees {
         employees.add(employee);
     }
 
-    public boolean checkIDAndPassword(String id, String password) {
+    public boolean checkID(String id) {
         for (Employee employee:employees) {
-            if(employee.compareIDAndPassword(id, password)){
+            if(employee.compareID(id)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkPassword(String password) {
+        for (Employee employee:employees) {
+            if(employee.comparePassword(password)){
                 return true;
             }
         }

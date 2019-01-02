@@ -2,12 +2,16 @@
 
 class LoginController {
     String login(IO ioMock, Employees employees) {
-        String status="login unsuccessful";
         String ID = ioMock.readInput();
         String password = ioMock.readInput();
-        boolean loginStatus = employees.checkIDAndPassword(ID,password);
-        if(loginStatus)
-            return "login successful";
-        return status;
+        boolean IDStatus = employees.checkID(ID);
+        if(IDStatus){
+           boolean passwordStatus = employees.checkPassword(password);
+           if(passwordStatus){
+               return "login successful";
+           }
+           return "password is invalid";
+        }
+        return "userID is invalid";
     }
 }

@@ -13,7 +13,11 @@ public class Employee {
         this.password = password;
     }
 
-    public boolean compareIDAndPassword(String id, String password) {
-        return this.ID.equals(id) && this.password.equals(password);
+    public boolean compareID(String id) {
+        return this.ID.equals(id);
+    }
+
+    public boolean comparePassword(String password) {
+        return this.password.equals(password);
     }
 }

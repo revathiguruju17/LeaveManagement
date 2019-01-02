@@ -31,9 +31,17 @@ class LoginControllerTest {
     }
 
     @Test
-    void shouldReturnUnSuccessfulMessageForUnSuccessfulLogin() {
+    void shouldReturnUnsuccessfulLoginWhenUserGivesWrongPassword() {
         when(IOMock.readInput()).thenReturn("revathi", "revathi4");
         String message = loginController.login(IOMock, employees);
-        assertEquals("login unsuccessful", message);
+        assertEquals("password is invalid", message);
     }
+
+    @Test
+    void shouldReturnInvalidUserMessageWhenUserGivesInvalidID() {
+        when(IOMock.readInput()).thenReturn("puja", "revathi4");
+        String message = loginController.login(IOMock, employees);
+        assertEquals("userID is invalid", message);
+    }
+
 }

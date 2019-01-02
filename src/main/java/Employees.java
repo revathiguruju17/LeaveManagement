@@ -1,18 +1,18 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Employees {
+class Employees {
     private List<Employee> employees;
 
-    public Employees() {
+    Employees() {
         employees = new ArrayList<>();
     }
 
-    public void addEmployee(Employee employee) {
+    void addEmployee(Employee employee) {
         employees.add(employee);
     }
 
-    public boolean checkID(String id) {
+    boolean checkID(String id) {
         for (Employee employee:employees) {
             if(employee.compareID(id)){
                 return true;
@@ -21,7 +21,7 @@ public class Employees {
         return false;
     }
 
-    public boolean checkPassword(String password) {
+    boolean checkPassword(String password) {
         for (Employee employee:employees) {
             if(employee.comparePassword(password)){
                 return true;

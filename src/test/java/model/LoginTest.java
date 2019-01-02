@@ -1,46 +1,48 @@
+package model;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import view.ConsoleIO;
+import view.IO;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-class LoginControllerTest {
+class LoginTest {
 
     private IO IOMock;
-    private LoginController loginController;
+    private Login login;
     private Employees employees;
     private Employee employee;
 
     @BeforeEach
     void init() {
         IOMock = Mockito.mock(ConsoleIO.class);
-        loginController = new LoginController();
+        login = new Login();
         employees = new Employees();
-        employee = new Employee();
-        employee.setID("revathi");
-        employee.setPassword("revathi123");
+        employee = new Employee("revathi","revathi123");
         employees.addEmployee(employee);
     }
 
     @Test
     void shouldReturnSuccessfulMessageForSuccessfulLogin() {
         when(IOMock.readInput()).thenReturn("revathi", "revathi123");
-        String message = loginController.login(IOMock, employees);
-        assertEquals("login successful", message);
+        String message = login.employeeLogin(IOMock, employees);
+        assertEquals("employeeLogin successful", message);
     }
 
     @Test
     void shouldReturnUnsuccessfulLoginWhenUserGivesWrongPassword() {
         when(IOMock.readInput()).thenReturn("revathi", "revathi4");
-        String message = loginController.login(IOMock, employees);
+        String message = login.employeeLogin(IOMock, employees);
         assertEquals("password is invalid", message);
     }
 
     @Test
     void shouldReturnInvalidUserMessageWhenUserGivesInvalidID() {
         when(IOMock.readInput()).thenReturn("puja", "revathi4");
-        String message = loginController.login(IOMock, employees);
+        String message = login.employeeLogin(IOMock, employees);
         assertEquals("userID is invalid", message);
     }
 

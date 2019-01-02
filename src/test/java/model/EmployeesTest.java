@@ -1,3 +1,5 @@
+package model;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -13,8 +15,6 @@ class EmployeesTest {
     void init(){
        employees = new Employees();
        employeeMock = Mockito.mock(Employee.class);
-       employeeMock.setID("revathi");
-       employeeMock.setPassword("123456");
        employees.addEmployee(employeeMock);
     }
 

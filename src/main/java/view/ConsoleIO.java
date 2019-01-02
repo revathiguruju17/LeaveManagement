@@ -1,6 +1,8 @@
+package view;
+
 import java.util.Scanner;
 
-public class ConsoleIO implements IO{
+public class ConsoleIO implements IO {
 
     @Override
     public String readInput(){

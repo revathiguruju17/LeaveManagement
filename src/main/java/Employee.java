@@ -63,4 +63,8 @@ class Employee {
     boolean checkLeaveApplied(Leave leave) {
         return leavesTaken.contains(leave);
     }
+
+    public Object getNumberOfLeavesTaken() {
+        return null;
+    }
 }

@@ -1,5 +1,5 @@
-public class LogoutCommand {
-    public void execute(Employee employee) {
+class LogoutCommand {
+    void execute(Employee employee) {
         employee.logout();
     }
 }

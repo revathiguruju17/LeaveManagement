@@ -8,7 +8,7 @@ class EmployeeTest {
 
     @BeforeEach
     void init() {
-        employee = new Employee("revathi","123456");
+        employee = new Employee("revathi", "123456");
     }
 
     @Test
@@ -32,9 +32,16 @@ class EmployeeTest {
     }
 
     @Test
-    void shouldUpdateNoOfLeavesLeftIfAnEmployeeApplyForALeave(){
+    void shouldUpdateNoOfLeavesLeftIfAnEmployeeApplyForALeave() {
         employee.updateNoOfLeaves(2);
-        assertEquals(22,employee.getNumberOfAnnualLeavesLeft());
+        assertEquals(22, employee.getNumberOfAnnualLeavesLeft());
     }
 
+    @Test
+    void shouldChangeTheEmployeeStateWhenUserLoginAndLogout() {
+        employee.login();
+        assertEquals(EmployeeState.LOGIN, employee.getState());
+        employee.logout();
+        assertEquals(EmployeeState.LOGOUT, employee.getState());
+    }
 }

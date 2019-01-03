@@ -32,7 +32,7 @@ class Employee {
         return numberOfAnnualLeavesLeft;
     }
 
-    void setEmployeeState() {
+    private void setEmployeeState() {
         if (this.employeeState == EmployeeState.LOGOUT) {
             employeeState = EmployeeState.LOGIN;
         } else {
@@ -45,10 +45,10 @@ class Employee {
     }
 
     void login() {
-
+        setEmployeeState();
     }
 
     void logout() {
-
+        setEmployeeState();
     }
 }

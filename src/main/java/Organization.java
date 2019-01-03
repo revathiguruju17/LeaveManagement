@@ -4,7 +4,7 @@ import java.util.List;
 public class Organization {
     private List<Employee> employees;
 
-    public Organization() {
+    Organization() {
         employees = new ArrayList<>();
     }
 
@@ -32,14 +32,6 @@ public class Organization {
 
     boolean contains(Employee employee) {
         return employees.contains(employee);
-    }
-
-    void updateState(String id) {
-        for (Employee employee : employees) {
-            if (employee.compareID(id)) {
-                employee.setEmployeeState();
-            }
-        }
     }
 
     public Employee getEmployee() {

@@ -1,12 +1,10 @@
-package model;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Employees {
+public class Organization {
     private List<Employee> employees;
 
-    public Employees() {
+    public Organization() {
         employees = new ArrayList<>();
     }
 
@@ -32,8 +30,8 @@ public class Employees {
         return false;
     }
 
-    boolean contains(Employee employeeMock) {
-        return employees.contains(employeeMock);
+    boolean contains(Employee employee) {
+        return employees.contains(employee);
     }
 
     void updateState(String id) {
@@ -53,12 +51,12 @@ public class Employees {
         return null;
     }
 
-    public void addEmployeesToTheList(Employees employees) {
+    public void addEmployeesToTheList(Organization organization) {
         Employee employee1 = new Employee("id1", "password1");
         Employee employee2 = new Employee("id2", "password2");
         Employee employee3 = new Employee("id3", "password3");
-        employees.addEmployee(employee1);
-        employees.addEmployee(employee2);
-        employees.addEmployee(employee3);
+        organization.addEmployee(employee1);
+        organization.addEmployee(employee2);
+        organization.addEmployee(employee3);
     }
 }

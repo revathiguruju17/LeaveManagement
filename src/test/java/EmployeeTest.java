@@ -1,11 +1,5 @@
-package model;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import view.ConsoleIO;
-import view.IO;
-
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,13 +37,4 @@ class EmployeeTest {
         assertEquals(22,employee.getNumberOfAnnualLeavesLeft());
     }
 
-    @Test
-    void shouldUpdateTheLeavesIfAnEmployeeApplyForALeave(){
-        IO io = new ConsoleIO();
-        Date startDate = new Date(2018,12,1);
-        Date endDate = new Date(2018,12,1);
-        Leave leave = new Leave(1,startDate,endDate,LeaveType.ANNUAL);
-        Admin admin = new Admin();
-        employee.applyLeave(leave,admin,io);
-    }
 }

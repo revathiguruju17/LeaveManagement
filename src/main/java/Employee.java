@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Employee {
+
     private String ID;
     private String password;
     private EmployeeState employeeState;
@@ -16,20 +17,20 @@ class Employee {
         employeeState = EmployeeState.LOGOUT;
     }
 
-    boolean compareID(String id) {
-        return this.ID.equals(id);
-    }
-
-    boolean comparePassword(String password) {
-        return this.password.equals(password);
-    }
-
-    private void updateNoOfLeavesLeft(int numberOfAnnualLeavesTaken) {
-        this.numberOfAnnualLeavesLeft -= numberOfAnnualLeavesTaken;
+    String getID() {
+        return ID;
     }
 
     int getNumberOfAnnualLeavesLeft() {
         return numberOfAnnualLeavesLeft;
+    }
+
+    boolean compareUserIDAndPassword(String ID,String password) {
+        return this.ID.equals(ID) && this.password.equals(password);
+    }
+
+    private void updateNoOfLeavesLeft(int numberOfAnnualLeavesTaken) {
+        this.numberOfAnnualLeavesLeft -= numberOfAnnualLeavesTaken;
     }
 
     EmployeeState getState() {
@@ -64,7 +65,7 @@ class Employee {
         return leavesTaken.contains(leave);
     }
 
-    public Object getNumberOfLeavesTaken() {
-        return null;
+    Object getNumberOfLeavesTaken() {
+        return leavesTaken;
     }
 }

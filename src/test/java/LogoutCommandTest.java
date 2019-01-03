@@ -7,7 +7,7 @@ class LogoutCommandTest {
     @Test
     void testWhetherItCallsTheLoginMethodInEmployeeWhenUserLogin(){
         Employee employee = Mockito.mock(Employee.class);
-        doNothing().when(employee).login();
+        doNothing().when(employee).logout();
         LogoutCommand logoutCommand = new LogoutCommand();
         logoutCommand.execute(employee);
         verify(employee,times(1)).logout();

@@ -1,5 +1,5 @@
 class LoginCommand {
-    void execute(Employee employee) {
-        employee.login();
+    void execute(Organization organization, String ID, String password){
+        organization.employeeLogin(ID, password);
     }
 }

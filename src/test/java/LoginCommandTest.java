@@ -6,10 +6,10 @@ import static org.mockito.Mockito.*;
 class LoginCommandTest {
     @Test
     void testWhetherItCallsTheLoginMethodInEmployeeWhenUserLogin(){
-        Employee employee = Mockito.mock(Employee.class);
-        doNothing().when(employee).login();
+        Organization organizationMock = Mockito.mock(Organization.class);
+        doNothing().when(organizationMock).employeeLogin("","");
         LoginCommand loginCommand = new LoginCommand();
-        loginCommand.execute(employee);
-        verify(employee,times(1)).login();
+        loginCommand.execute(organizationMock,null,null);
+        verify(organizationMock,times(1)).employeeLogin(null,null);
     }
 }

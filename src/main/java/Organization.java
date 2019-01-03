@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Organization {
+class Organization {
     private List<Employee> employees;
 
     Organization() {
@@ -12,43 +12,27 @@ public class Organization {
         employees.add(employee);
     }
 
-    boolean checkID(String id) {
+    void employeeLogin(String id, String password){
+        boolean loginState = false;
         for (Employee employee : employees) {
-            if (employee.compareID(id)) {
-                return true;
+            if (employee.compareUserIDAndPassword(id,password)) {
+                Employee employee1 = getEmployee(id);
+                employee1.login();
+                loginState = true;
+                break;
             }
         }
-        return false;
-    }
-
-    boolean checkPassword(String password) {
-        for (Employee employee : employees) {
-            if (employee.comparePassword(password)) {
-                return true;
-            }
+        if(!loginState){
+            throw new LoginInvalidException("Invalid Login");
         }
-        return false;
     }
 
-    boolean contains(Employee employee) {
-        return employees.contains(employee);
-    }
-
-    public Employee getEmployee() {
+    private Employee getEmployee(String id) {
         for (Employee employee : employees) {
-            if (employee.getState() == EmployeeState.LOGIN) {
+            if (id.equals(employee.getID())) {
                 return employee;
             }
         }
         return null;
-    }
-
-    public void addEmployeesToTheList(Organization organization) {
-        Employee employee1 = new Employee("id1", "password1");
-        Employee employee2 = new Employee("id2", "password2");
-        Employee employee3 = new Employee("id3", "password3");
-        organization.addEmployee(employee1);
-        organization.addEmployee(employee2);
-        organization.addEmployee(employee3);
     }
 }

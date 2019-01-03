@@ -1,36 +1,30 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
 
 class OrganizationTest {
     private Organization organization;
-    private Employee employeeMock;
 
     @BeforeEach
-    void init(){
-       organization = new Organization();
-       employeeMock = Mockito.mock(Employee.class);
-       organization.addEmployee(employeeMock);
+    void init() {
+        organization = new Organization();
     }
 
     @Test
-    void checkingWhetherTheCompareIDMethodIsCalledOrNot(){
-        when(employeeMock.compareID("revathi")).thenReturn(true);
-        assertTrue(organization.checkID("revathi"));
-    }
-
-
-    @Test
-    void checkingWhetherTheComparePasswordMethodIsCalledOrNot(){
-        when(employeeMock.comparePassword("123456")).thenReturn(true);
-        assertTrue(organization.checkPassword("123456"));
+    void shouldUpdateEmployeeLoginStateWhenUserEntersValidIDAndPassword() {
+        Employee employee = new Employee("id1", "password1");
+        organization.addEmployee(employee);
+        EmployeeState stateBeforeLogin = employee.getState();
+        organization.employeeLogin("id1", "password1");
+        EmployeeState stateAfterLogin = employee.getState();
+        assertNotEquals(stateAfterLogin, stateBeforeLogin);
     }
 
     @Test
-    void shouldAddTheNewEmployeeToTheListCorrectly(){
-        assertTrue(organization.contains(employeeMock));
+    void shouldThrowAnExceptionIfTheUserGivesInvalidIDAndPassword() {
+        Employee employee = new Employee("id1", "password1");
+        organization.addEmployee(employee);
+        assertThrows(LoginInvalidException.class, () -> organization.employeeLogin("id", "password"));
     }
 }

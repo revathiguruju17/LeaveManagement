@@ -1,5 +1,5 @@
-public class DisplayLeavesCommand {
-    public Object execute(Employee employee) {
-        return null;
+class DisplayLeavesCommand {
+    Object execute(Employee employee) {
+        return employee.getNumberOfLeavesTaken();
     }
 }

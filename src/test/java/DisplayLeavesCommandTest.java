@@ -7,7 +7,7 @@ import static org.mockito.Mockito.when;
 class DisplayLeavesCommandTest {
 
     @Test
-    void shouldCallDisplayMethodInEmployeeWhenUserWantsListOfLeaves(){
+    void shouldCallDisplayMethodInEmployeeWhenUserWantsListOfLeaves() {
         Employee employee = Mockito.mock(Employee.class);
         when(employee.getNumberOfLeavesTaken()).thenReturn(null);
         DisplayLeavesCommand displayLeavesCommand = new DisplayLeavesCommand();

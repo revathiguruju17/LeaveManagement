@@ -45,9 +45,11 @@ class Employee {
     }
 
     void applyLeave(Leave leave) {
-       int numberOfLeaves = leave.getNumberOfLeaves();
-       updateNoOfLeavesLeft(numberOfLeaves);
-       leavesTaken.add(leave);
+        if (leave.getLeaveType() == LeaveType.ANNUAL) {
+            int numberOfLeaves = leave.getNumberOfLeaves();
+            updateNoOfLeavesLeft(numberOfLeaves);
+        }
+        leavesTaken.add(leave);
     }
 
     private void setEmployeeState() {
@@ -58,7 +60,7 @@ class Employee {
         }
     }
 
-    public boolean checkLeaveApplied(Leave leave) {
-       return leavesTaken.contains(leave);
+    boolean checkLeaveApplied(Leave leave) {
+        return leavesTaken.contains(leave);
     }
 }

@@ -24,20 +24,12 @@ class Employee {
         return this.password.equals(password);
     }
 
-    void updateNoOfLeaves(int numberOfAnnualLeavesTaken) {
+    private void updateNoOfLeavesLeft(int numberOfAnnualLeavesTaken) {
         this.numberOfAnnualLeavesLeft -= numberOfAnnualLeavesTaken;
     }
 
     int getNumberOfAnnualLeavesLeft() {
         return numberOfAnnualLeavesLeft;
-    }
-
-    private void setEmployeeState() {
-        if (this.employeeState == EmployeeState.LOGOUT) {
-            employeeState = EmployeeState.LOGIN;
-        } else {
-            employeeState = EmployeeState.LOGOUT;
-        }
     }
 
     EmployeeState getState() {
@@ -50,5 +42,23 @@ class Employee {
 
     void logout() {
         setEmployeeState();
+    }
+
+    void applyLeave(Leave leave) {
+       int numberOfLeaves = leave.getNumberOfLeaves();
+       updateNoOfLeavesLeft(numberOfLeaves);
+       leavesTaken.add(leave);
+    }
+
+    private void setEmployeeState() {
+        if (this.employeeState == EmployeeState.LOGOUT) {
+            employeeState = EmployeeState.LOGIN;
+        } else {
+            employeeState = EmployeeState.LOGOUT;
+        }
+    }
+
+    public boolean checkLeaveApplied(Leave leave) {
+       return leavesTaken.contains(leave);
     }
 }

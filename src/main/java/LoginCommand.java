@@ -1,5 +1,5 @@
-public class LoginCommand {
-    public void execute(Employee employee) {
+class LoginCommand {
+    void execute(Employee employee) {
         employee.login();
     }
 }

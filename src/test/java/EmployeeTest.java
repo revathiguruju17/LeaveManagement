@@ -1,6 +1,8 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Date;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeTest {
@@ -32,16 +34,19 @@ class EmployeeTest {
     }
 
     @Test
-    void shouldUpdateNoOfLeavesLeftIfAnEmployeeApplyForALeave() {
-        employee.updateNoOfLeaves(2);
-        assertEquals(22, employee.getNumberOfAnnualLeavesLeft());
-    }
-
-    @Test
     void shouldChangeTheEmployeeStateWhenUserLoginAndLogout() {
         employee.login();
         assertEquals(EmployeeState.LOGIN, employee.getState());
         employee.logout();
         assertEquals(EmployeeState.LOGOUT, employee.getState());
+    }
+    
+    @Test
+    void shouldUpdateTheEmployeeLeaveDetailsWhenEmployeeAppliesForALeave(){
+        Date startDate = new Date(2018,12,21);
+        Date endDate = new Date(2018,12,22);
+        Leave leave = new Leave(2,startDate,endDate,LeaveType.ANNUAL);
+        employee.applyLeave(leave);
+        assertTrue(employee.checkLeaveApplied(leave));
     }
 }

@@ -9,22 +9,17 @@ class OrganizationTest {
     @BeforeEach
     void init() {
         organization = new Organization();
+        Employee employee = new Employee("id1", "password1");
+        organization.addEmployee(employee);
     }
 
     @Test
-    void shouldUpdateEmployeeLoginStateWhenUserEntersValidIDAndPassword() {
-        Employee employee = new Employee("id1", "password1");
-        organization.addEmployee(employee);
-        EmployeeState stateBeforeLogin = employee.getState();
-        organization.employeeLogin("id1", "password1");
-        EmployeeState stateAfterLogin = employee.getState();
-        assertNotEquals(stateAfterLogin, stateBeforeLogin);
+    void shouldReturnTrueWhenUserGivesValidIDAndPassword() {
+        assertTrue(organization.employeeLogin("id1","password1"));
     }
 
     @Test
-    void shouldThrowAnExceptionIfTheUserGivesInvalidIDAndPassword() {
-        Employee employee = new Employee("id1", "password1");
-        organization.addEmployee(employee);
-        assertThrows(LoginInvalidException.class, () -> organization.employeeLogin("id", "password"));
+    void shouldReturnFalseIfTheUserGivesInvalidIDAndPassword() {
+        assertFalse(organization.employeeLogin("id2","password2"));
     }
 }

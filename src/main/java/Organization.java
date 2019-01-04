@@ -12,22 +12,19 @@ class Organization {
         employees.add(employee);
     }
 
-    void employeeLogin(String id, String password){
-        boolean loginState = false;
+    boolean employeeLogin(String id, String password){
         for (Employee employee : employees) {
             if (employee.compareUserIDAndPassword(id,password)) {
                 Employee employee1 = getEmployee(id);
                 employee1.login();
-                loginState = true;
-                break;
+                return true;
+
             }
         }
-        if(!loginState){
-            throw new LoginInvalidException("Invalid Login");
-        }
+        return false;
     }
 
-    private Employee getEmployee(String id) {
+    Employee getEmployee(String id) {
         for (Employee employee : employees) {
             if (id.equals(employee.getID())) {
                 return employee;

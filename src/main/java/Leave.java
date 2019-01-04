@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class Leave {
+class Leave {
     private Date fromDate;
     private Date toDate;
     private int NumberOfLeaves;
@@ -18,7 +18,7 @@ public class Leave {
         return NumberOfLeaves;
     }
 
-    public LeaveType getLeaveType() {
+    LeaveType getLeaveType() {
         return leaveType;
     }
 }

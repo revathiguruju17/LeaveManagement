@@ -12,7 +12,7 @@ class Employee {
     Employee(String ID, String password) {
         this.ID = ID;
         this.password = password;
-        this.numberOfAnnualLeavesLeft = 24;
+        this.numberOfAnnualLeavesLeft = 10;
         leavesTaken = new ArrayList<>();
         employeeState = EmployeeState.LOGOUT;
     }
@@ -45,12 +45,17 @@ class Employee {
         setEmployeeState();
     }
 
-    void applyLeave(Leave leave) {
+    String applyLeave(Leave leave, Approver approver) {
         if (leave.getLeaveType() == LeaveType.ANNUAL) {
-            int numberOfLeaves = leave.getNumberOfLeaves();
-            updateNoOfLeavesLeft(numberOfLeaves);
+            if(approver.isAcceptLeave(numberOfAnnualLeavesLeft,leave.getNumberOfLeaves())) {
+                int numberOfLeaves = leave.getNumberOfLeaves();
+                updateNoOfLeavesLeft(numberOfLeaves);
+                leavesTaken.add(leave);
+                return "leave accepted";
+            }
+            return "leave rejected";
         }
-        leavesTaken.add(leave);
+        return "leave accepted";
     }
 
     private void setEmployeeState() {

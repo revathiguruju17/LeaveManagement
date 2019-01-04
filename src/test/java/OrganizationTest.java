@@ -5,11 +5,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OrganizationTest {
     private Organization organization;
+    private Employee employee;
 
     @BeforeEach
     void init() {
         organization = new Organization();
-        Employee employee = new Employee("id1", "password1");
+        employee = new Employee("id1", "password1");
         organization.addEmployee(employee);
     }
 
@@ -21,5 +22,15 @@ class OrganizationTest {
     @Test
     void shouldReturnFalseIfTheUserGivesInvalidIDAndPassword() {
         assertFalse(organization.employeeLogin("id2","password2"));
+    }
+
+    @Test
+    void shouldReturnCorrectEmployeeWhenTheUserGivesID(){
+        assertEquals(employee,organization.getEmployee("id1"));
+    }
+
+    @Test
+    void shouldReturnNullWhenTheUserIsInvalid(){
+        assertNull(organization.getEmployee("id2"));
     }
 }

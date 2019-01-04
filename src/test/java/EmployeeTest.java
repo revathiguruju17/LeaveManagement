@@ -16,6 +16,19 @@ class EmployeeTest {
     }
 
     @Test
+    void shouldChangeTheStateOfEmployeeWhenLogin(){
+        employee.login();
+        assertEquals(EmployeeState.LOGIN,employee.getState());
+    }
+
+    @Test
+    void shouldChangeTheStateOfEmployeeWhenLogout(){
+        employee.login();
+        employee.logout();
+        assertEquals(EmployeeState.LOGOUT,employee.getState());
+    }
+
+    @Test
     void shouldReturnTrueForValidUserID() {
         assertTrue(employee.compareUserIDAndPassword("revathi","123456"));
     }

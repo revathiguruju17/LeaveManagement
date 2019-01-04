@@ -12,13 +12,12 @@ class Organization {
         employees.add(employee);
     }
 
-    boolean employeeLogin(String id, String password){
+    boolean employeeLogin(String id, String password) {
         for (Employee employee : employees) {
-            if (employee.compareUserIDAndPassword(id,password)) {
+            if (employee.compareUserIDAndPassword(id, password)) {
                 Employee employee1 = getEmployee(id);
                 employee1.login();
                 return true;
-
             }
         }
         return false;

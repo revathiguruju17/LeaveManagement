@@ -44,16 +44,16 @@ class EmployeeTest {
         Date endDate = new Date(2018,12,22);
         Leave leave = new Leave(2,startDate,endDate,LeaveType.ANNUAL);
         String message = employee.applyLeave(leave,approver);
-        assertEquals("leave accepted", message);
+        assertEquals("leave approved", message);
     }
 
     @Test
     void shouldReturnCorrectMessageIfTheApproverRejectsTheAnnualLeave(){
         Date startDate = new Date(2018,12,1);
-        Date endDate = new Date(2018,12,24);
-        Leave leave = new Leave(25,startDate,endDate,LeaveType.ANNUAL);
+        Date endDate = new Date(2018,12,15);
+        Leave leave = new Leave(15,startDate,endDate,LeaveType.ANNUAL);
         String message = employee.applyLeave(leave,approver);
-        assertEquals("leave rejected", message);
+        assertEquals("only 10 leaves are approved", message);
     }
 
     @Test
@@ -64,7 +64,7 @@ class EmployeeTest {
         Leave leave = new Leave(2, startDate, endDate, LeaveType.SICK);
         String result = employee.applyLeave(leave, approver);
         int leavesLeftAfterApplyingForLeave = employee.getNumberOfAnnualLeavesLeft();
-        assertEquals("leave accepted", result);
+        assertEquals("leave approved", result);
         assertEquals(leavesLeftAfterApplyingForLeave,leavesLeftBeforeApplyingForLeave);
     }
 }

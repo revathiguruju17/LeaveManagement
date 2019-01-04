@@ -25,7 +25,7 @@ class Employee {
         return numberOfAnnualLeavesLeft;
     }
 
-    boolean compareUserIDAndPassword(String ID,String password) {
+    boolean compareUserIDAndPassword(String ID, String password) {
         return this.ID.equals(ID) && this.password.equals(password);
     }
 
@@ -47,15 +47,12 @@ class Employee {
 
     String applyLeave(Leave leave, Approver approver) {
         if (leave.getLeaveType() == LeaveType.ANNUAL) {
-            if(approver.isAcceptLeave(numberOfAnnualLeavesLeft,leave.getNumberOfLeaves())) {
-                int numberOfLeaves = leave.getNumberOfLeaves();
-                updateNoOfLeavesLeft(numberOfLeaves);
-                leavesTaken.add(leave);
-                return "leave accepted";
-            }
-            return "leave rejected";
+            String message = approver.approveLeave(numberOfAnnualLeavesLeft, leave.getNumberOfLeaves());
+            updateNoOfLeavesLeft(leave.getNumberOfLeaves());
+            leavesTaken.add(leave);
+            return message;
         }
-        return "leave accepted";
+        return "leave approved";
     }
 
     private void setEmployeeState() {
@@ -64,13 +61,5 @@ class Employee {
         } else {
             employeeState = EmployeeState.LOGOUT;
         }
-    }
-
-    boolean checkLeaveApplied(Leave leave) {
-        return leavesTaken.contains(leave);
-    }
-
-    Object getNumberOfLeavesTaken() {
-        return leavesTaken;
     }
 }

@@ -25,7 +25,7 @@ class LeaveManagementTest {
         Date endDate = new Date(2018, 12, 3);
         Leave leave = new Leave(2, startDate, endDate, LeaveType.ANNUAL);
         String message = leaveManagement.start("id1", "password1", leave, organization, approver);
-        assertEquals("leave accepted", message);
+        assertEquals("leave approved", message);
     }
 
     @Test
@@ -40,9 +40,9 @@ class LeaveManagementTest {
     @Test
     void shouldReturnLeaveRejectedMessageIfTheAnnualLeavesAreNotLeft(){
         Date startDate = new Date(2018, 12, 2);
-        Date endDate = new Date(2018, 12, 13);
-        Leave leave = new Leave(13, startDate, endDate, LeaveType.ANNUAL);
+        Date endDate = new Date(2018, 12, 16);
+        Leave leave = new Leave(15, startDate, endDate, LeaveType.ANNUAL);
         String message = leaveManagement.start("id1", "password1", leave, organization, approver);
-        assertEquals("leave rejected", message);
+        assertEquals("only 10 leaves are approved", message);
     }
 }

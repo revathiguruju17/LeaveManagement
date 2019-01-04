@@ -1,19 +1,25 @@
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 class ApproverTest {
 
     @Test
-    void shouldReturnTrueIfTheConditionForLeaveIsSatisfied(){
+    void shouldReturnLeavesApprovedMessageIfIfTheLeavesLeftAreGreaterThanAppliedLeaves(){
         Approver approver = new Approver();
-        assertTrue(approver.isAcceptLeave(8,5));
+        assertEquals("leave approved",approver.approveLeave(8,5));
     }
 
     @Test
-    void shouldReturnFalseIfTheConditionForLeaveIsNotSatisfied(){
+    void shouldReturnNoLeavesLeftMessageIfTheAnnualLeavesAreOver(){
         Approver approver = new Approver();
-        assertFalse(approver.isAcceptLeave(3,4));
+        assertEquals("No Annual leaves left",approver.approveLeave(0,4));
+    }
+
+    @Test
+    void shouldReturnMessageIfTheAnnualLeavesLeftAreLessThanAppliedLeaves(){
+        Approver approver = new Approver();
+        assertEquals("only 5 leaves are approved",approver.approveLeave(5,8));
     }
 }

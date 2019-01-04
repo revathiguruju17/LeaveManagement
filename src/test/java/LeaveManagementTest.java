@@ -21,7 +21,7 @@ class LeaveManagementTest {
     }
 
     @Test
-    void shouldReturnSuccessfulMessageIfTheLeaveIsApproved() {
+    void shouldReturnLeaveStateAsApprovedIfTheLeaveIsApproved() {
         Date startDate = new Date(2018, 12, 2);
         Date endDate = new Date(2018, 12, 3);
         Leave leave = new Leave(2, startDate, endDate, LeaveType.ANNUAL);
@@ -38,7 +38,7 @@ class LeaveManagementTest {
     }
 
     @Test
-    void shouldReturnLeaveRejectedMessageIfTheAnnualLeavesAreNotLeft() {
+    void shouldReturnLeaveStateAsPartiallyApprovedIfTheAnnualLeavesAreLessThanAppliedLeaves() {
         Date startDate = new Date(2018, 12, 2);
         Date endDate = new Date(2018, 12, 16);
         Leave leave = new Leave(15, startDate, endDate, LeaveType.ANNUAL);

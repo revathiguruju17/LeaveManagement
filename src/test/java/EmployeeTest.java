@@ -16,43 +16,42 @@ class EmployeeTest {
     }
 
     @Test
-    void shouldChangeTheStateOfEmployeeWhenLogin(){
+    void shouldChangeTheStateOfEmployeeWhenLogin() {
         employee.login();
-        assertEquals(EmployeeState.LOGIN,employee.getState());
+        assertEquals(EmployeeState.LOGIN, employee.getState());
     }
 
     @Test
-    void shouldChangeTheStateOfEmployeeWhenLogout(){
-        employee.login();
+    void shouldChangeTheStateOfEmployeeWhenLogout() {
         employee.logout();
-        assertEquals(EmployeeState.LOGOUT,employee.getState());
+        assertEquals(EmployeeState.LOGOUT, employee.getState());
     }
 
     @Test
     void shouldReturnTrueForValidUserID() {
-        assertTrue(employee.compareUserIDAndPassword("revathi","123456"));
+        assertTrue(employee.compareUserIDAndPassword("revathi", "123456"));
     }
 
     @Test
     void shouldReturnFalseForInValidUserIDAndPassword() {
-        assertFalse(employee.compareUserIDAndPassword("lavanya","123456"));
+        assertFalse(employee.compareUserIDAndPassword("lavanya", "123456"));
     }
 
     @Test
-    void shouldReturnSuccessfulMessageIfTheApproverAcceptsTheAnnualLeave(){
-        Date startDate = new Date(2018,12,21);
-        Date endDate = new Date(2018,12,22);
-        Leave leave = new Leave(2,startDate,endDate,LeaveType.ANNUAL);
-        LeaveState leaveState  = employee.applyLeave(leave,approver);
+    void shouldReturnSuccessfulMessageIfTheApproverAcceptsTheAnnualLeave() {
+        Date startDate = new Date(2018, 12, 21);
+        Date endDate = new Date(2018, 12, 22);
+        Leave leave = new Leave(2, startDate, endDate, LeaveType.ANNUAL);
+        LeaveState leaveState = employee.applyLeave(leave, approver);
         assertEquals(LeaveState.APPROVED, leaveState);
     }
 
     @Test
-    void shouldReturnCorrectMessageIfTheApproverRejectsTheAnnualLeave(){
-        Date startDate = new Date(2018,12,1);
-        Date endDate = new Date(2018,12,15);
-        Leave leave = new Leave(15,startDate,endDate,LeaveType.ANNUAL);
-        LeaveState leaveState  = employee.applyLeave(leave,approver);
+    void shouldReturnCorrectMessageIfTheApproverRejectsTheAnnualLeave() {
+        Date startDate = new Date(2018, 12, 1);
+        Date endDate = new Date(2018, 12, 15);
+        Leave leave = new Leave(15, startDate, endDate, LeaveType.ANNUAL);
+        LeaveState leaveState = employee.applyLeave(leave, approver);
         assertEquals(LeaveState.PARTIALLY_APPROVED, leaveState);
     }
 
@@ -65,6 +64,6 @@ class EmployeeTest {
         LeaveState leaveState = employee.applyLeave(leave, approver);
         int leavesLeftAfterApplyingForLeave = employee.getNumberOfAnnualLeavesLeft();
         assertEquals(LeaveState.APPROVED, leaveState);
-        assertEquals(leavesLeftAfterApplyingForLeave,leavesLeftBeforeApplyingForLeave);
+        assertEquals(leavesLeftAfterApplyingForLeave, leavesLeftBeforeApplyingForLeave);
     }
 }

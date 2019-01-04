@@ -3,8 +3,9 @@ import java.util.Date;
 class Leave {
     private Date fromDate;
     private Date toDate;
-    private int NumberOfLeaves;
 
+    private int NumberOfLeaves;
+    private LeaveState leaveState;
     private LeaveType leaveType;
 
     Leave(int NumberOfLeaves, Date fromDate, Date toDate, LeaveType leaveType) {
@@ -20,5 +21,13 @@ class Leave {
 
     LeaveType getLeaveType() {
         return leaveType;
+    }
+
+    void setLeaveState(LeaveState leaveState) {
+        this.leaveState = leaveState;
+    }
+
+    void setNumberOfLeaves(int numberOfLeaves) {
+        NumberOfLeaves = numberOfLeaves;
     }
 }

@@ -38,28 +38,27 @@ class Employee {
     }
 
     void login() {
-        setEmployeeState();
+        employeeState = EmployeeState.LOGIN;
     }
 
     void logout() {
-        setEmployeeState();
+        employeeState = EmployeeState.LOGOUT;
     }
 
     LeaveState applyLeave(Leave leave, Approver approver) {
         if (leave.getLeaveType() == LeaveType.ANNUAL) {
             LeaveState leaveState = approver.approveLeave(numberOfAnnualLeavesLeft, leave.getNumberOfLeaves());
-            updateNoOfLeavesLeft(leave.getNumberOfLeaves());
+            leave.setLeaveState(leaveState);
+            if (leaveState == LeaveState.PARTIALLY_APPROVED) {
+                leave.setNumberOfLeaves(numberOfAnnualLeavesLeft);
+                updateNoOfLeavesLeft(numberOfAnnualLeavesLeft);
+            } else {
+                updateNoOfLeavesLeft(leave.getNumberOfLeaves());
+            }
             leavesTaken.add(leave);
             return leaveState;
         }
         return LeaveState.APPROVED;
     }
 
-    private void setEmployeeState() {
-        if (this.employeeState == EmployeeState.LOGOUT) {
-            employeeState = EmployeeState.LOGIN;
-        } else {
-            employeeState = EmployeeState.LOGOUT;
-        }
-    }
 }

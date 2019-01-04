@@ -45,14 +45,14 @@ class Employee {
         setEmployeeState();
     }
 
-    String applyLeave(Leave leave, Approver approver) {
+    LeaveState applyLeave(Leave leave, Approver approver) {
         if (leave.getLeaveType() == LeaveType.ANNUAL) {
-            String message = approver.approveLeave(numberOfAnnualLeavesLeft, leave.getNumberOfLeaves());
+            LeaveState leaveState = approver.approveLeave(numberOfAnnualLeavesLeft, leave.getNumberOfLeaves());
             updateNoOfLeavesLeft(leave.getNumberOfLeaves());
             leavesTaken.add(leave);
-            return message;
+            return leaveState;
         }
-        return "leave approved";
+        return LeaveState.APPROVED;
     }
 
     private void setEmployeeState() {

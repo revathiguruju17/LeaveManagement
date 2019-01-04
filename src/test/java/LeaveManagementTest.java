@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class LeaveManagementTest {
     private LeaveManagement leaveManagement;
@@ -24,8 +25,8 @@ class LeaveManagementTest {
         Date startDate = new Date(2018, 12, 2);
         Date endDate = new Date(2018, 12, 3);
         Leave leave = new Leave(2, startDate, endDate, LeaveType.ANNUAL);
-        String message = leaveManagement.start("id1", "password1", leave, organization, approver);
-        assertEquals("leave approved", message);
+        LeaveState leaveState = leaveManagement.start("id1", "password1", leave, organization, approver);
+        assertEquals(LeaveState.APPROVED, leaveState);
     }
 
     @Test
@@ -33,16 +34,15 @@ class LeaveManagementTest {
         Date startDate = new Date(2018, 12, 2);
         Date endDate = new Date(2018, 12, 3);
         Leave leave = new Leave(2, startDate, endDate, LeaveType.ANNUAL);
-        String message = leaveManagement.start("id", "password", leave, organization, approver);
-        assertEquals("invalid ID and password", message);
+        assertThrows(LoginInvalidException.class,()->leaveManagement.start("id", "password", leave, organization, approver));
     }
 
     @Test
-    void shouldReturnLeaveRejectedMessageIfTheAnnualLeavesAreNotLeft(){
+    void shouldReturnLeaveRejectedMessageIfTheAnnualLeavesAreNotLeft() {
         Date startDate = new Date(2018, 12, 2);
         Date endDate = new Date(2018, 12, 16);
         Leave leave = new Leave(15, startDate, endDate, LeaveType.ANNUAL);
-        String message = leaveManagement.start("id1", "password1", leave, organization, approver);
-        assertEquals("only 10 leaves are approved", message);
+        LeaveState leaveState = leaveManagement.start("id1", "password1", leave, organization, approver);
+        assertEquals(LeaveState.PARTIALLY_APPROVED, leaveState);
     }
 }

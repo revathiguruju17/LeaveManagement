@@ -1,11 +1,11 @@
 class Approver {
-    String approveLeave(int numberOfLeavesLeft, int numberOfLeavesWant) {
+    LeaveState approveLeave(int numberOfLeavesLeft, int numberOfLeavesWant) {
         if (numberOfLeavesLeft == 0) {
-            return "No Annual leaves left";
+            return LeaveState.REJECTED;
         } else if (numberOfLeavesLeft >= numberOfLeavesWant)
-            return "leave approved";
+            return LeaveState.APPROVED;
         else {
-            return "only " + numberOfLeavesLeft + " leaves are approved";
+            return LeaveState.PARTIALLY_APPROVED;
         }
     }
 }

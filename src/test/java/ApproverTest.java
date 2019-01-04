@@ -8,18 +8,18 @@ class ApproverTest {
     @Test
     void shouldReturnLeavesApprovedMessageIfIfTheLeavesLeftAreGreaterThanAppliedLeaves(){
         Approver approver = new Approver();
-        assertEquals("leave approved",approver.approveLeave(8,5));
+        assertEquals(LeaveState.APPROVED,approver.approveLeave(8,5));
     }
 
     @Test
     void shouldReturnNoLeavesLeftMessageIfTheAnnualLeavesAreOver(){
         Approver approver = new Approver();
-        assertEquals("No Annual leaves left",approver.approveLeave(0,4));
+        assertEquals(LeaveState.REJECTED,approver.approveLeave(0,4));
     }
 
     @Test
     void shouldReturnMessageIfTheAnnualLeavesLeftAreLessThanAppliedLeaves(){
         Approver approver = new Approver();
-        assertEquals("only 5 leaves are approved",approver.approveLeave(5,8));
+        assertEquals(LeaveState.PARTIALLY_APPROVED,approver.approveLeave(5,8));
     }
 }

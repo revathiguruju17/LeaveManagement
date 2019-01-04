@@ -16,21 +16,21 @@ class OrganizationTest {
 
     @Test
     void shouldReturnTrueWhenUserGivesValidIDAndPassword() {
-        assertTrue(organization.employeeLogin("id1","password1"));
+        assertTrue(organization.employeeLogin("id1", "password1"));
     }
 
     @Test
     void shouldReturnFalseIfTheUserGivesInvalidIDAndPassword() {
-        assertFalse(organization.employeeLogin("id2","password2"));
+        assertFalse(organization.employeeLogin("id2", "password2"));
     }
 
     @Test
-    void shouldReturnCorrectEmployeeWhenTheUserGivesID(){
-        assertEquals(employee,organization.getEmployee("id1"));
+    void shouldReturnCorrectEmployeeWhenTheUserGivesID() {
+        assertEquals(employee, organization.getEmployee("id1"));
     }
 
     @Test
-    void shouldReturnNullWhenTheUserIsInvalid(){
+    void shouldReturnNullWhenTheUserIsInvalid() {
         assertNull(organization.getEmployee("id2"));
     }
 }

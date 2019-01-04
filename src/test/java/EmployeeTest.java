@@ -43,8 +43,8 @@ class EmployeeTest {
         Date startDate = new Date(2018,12,21);
         Date endDate = new Date(2018,12,22);
         Leave leave = new Leave(2,startDate,endDate,LeaveType.ANNUAL);
-        String message = employee.applyLeave(leave,approver);
-        assertEquals("leave approved", message);
+        LeaveState leaveState  = employee.applyLeave(leave,approver);
+        assertEquals(LeaveState.APPROVED, leaveState);
     }
 
     @Test
@@ -52,8 +52,8 @@ class EmployeeTest {
         Date startDate = new Date(2018,12,1);
         Date endDate = new Date(2018,12,15);
         Leave leave = new Leave(15,startDate,endDate,LeaveType.ANNUAL);
-        String message = employee.applyLeave(leave,approver);
-        assertEquals("only 10 leaves are approved", message);
+        LeaveState leaveState  = employee.applyLeave(leave,approver);
+        assertEquals(LeaveState.PARTIALLY_APPROVED, leaveState);
     }
 
     @Test
@@ -62,9 +62,9 @@ class EmployeeTest {
         Date endDate = new Date(2018, 12, 22);
         int leavesLeftBeforeApplyingForLeave = employee.getNumberOfAnnualLeavesLeft();
         Leave leave = new Leave(2, startDate, endDate, LeaveType.SICK);
-        String result = employee.applyLeave(leave, approver);
+        LeaveState leaveState = employee.applyLeave(leave, approver);
         int leavesLeftAfterApplyingForLeave = employee.getNumberOfAnnualLeavesLeft();
-        assertEquals("leave approved", result);
+        assertEquals(LeaveState.APPROVED, leaveState);
         assertEquals(leavesLeftAfterApplyingForLeave,leavesLeftBeforeApplyingForLeave);
     }
 }

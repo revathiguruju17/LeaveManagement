@@ -3,9 +3,11 @@ import java.util.List;
 
 class Organization {
     private List<Employee> employees;
+    private Approver approver;
 
     Organization() {
         employees = new ArrayList<>();
+        approver = new Approver("id","password");
     }
 
     void addEmployee(Employee employee) {

@@ -15,7 +15,7 @@ class LeaveManagementTest {
     void init() {
         leaveManagement = new LeaveManagement();
         organization = new Organization();
-        approver = new Approver();
+        approver = new Approver("id","password");
         Employee employee = new Employee("id1", "password1");
         organization.addEmployee(employee);
     }

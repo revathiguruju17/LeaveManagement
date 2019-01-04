@@ -61,8 +61,7 @@ class Employee {
         return LeaveState.APPROVED;
     }
 
-    public List<Leave> getLeavesHistory() {
+    List<Leave> getLeavesHistory() {
         return leavesHistory;
     }
-
 }

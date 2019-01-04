@@ -1,9 +1,9 @@
 import java.util.Date;
 
 class Leave {
+    private String employeeID;
     private Date fromDate;
     private Date toDate;
-
     private int NumberOfLeaves;
     private LeaveState leaveState;
     private LeaveType leaveType;
@@ -29,5 +29,9 @@ class Leave {
 
     void setNumberOfLeaves(int numberOfLeaves) {
         NumberOfLeaves = numberOfLeaves;
+    }
+
+    public void setID() {
+        this.employeeID = employeeID;
     }
 }

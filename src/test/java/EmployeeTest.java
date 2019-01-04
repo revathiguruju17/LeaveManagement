@@ -12,7 +12,7 @@ class EmployeeTest {
     @BeforeEach
     void init() {
         employee = new Employee("revathi", "123456");
-        approver = new Approver();
+        approver = new Approver("id","password");
     }
 
     @Test

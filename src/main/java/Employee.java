@@ -7,13 +7,13 @@ class Employee {
     private String password;
     private EmployeeState employeeState;
     private int numberOfAnnualLeavesLeft;
-    private List<Leave> leavesTaken;
+    private List<Leave> leavesHistory;
 
     Employee(String ID, String password) {
         this.ID = ID;
         this.password = password;
         this.numberOfAnnualLeavesLeft = 10;
-        leavesTaken = new ArrayList<>();
+        leavesHistory = new ArrayList<>();
         employeeState = EmployeeState.LOGOUT;
     }
 
@@ -55,10 +55,14 @@ class Employee {
             } else {
                 updateNoOfLeavesLeft(leave.getNumberOfLeaves());
             }
-            leavesTaken.add(leave);
+            leavesHistory.add(leave);
             return leaveState;
         }
         return LeaveState.APPROVED;
+    }
+
+    public List<Leave> getLeavesHistory() {
+        return leavesHistory;
     }
 
 }

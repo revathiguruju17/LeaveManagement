@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Employee {
-
     private String ID;
     private String password;
     private EmployeeState employeeState;
@@ -12,33 +11,36 @@ class Employee {
     Employee(String ID, String password) {
         this.ID = ID;
         this.password = password;
+        this.employeeState = EmployeeState.LOGOUT;
         this.numberOfAnnualLeavesLeft = 10;
         leavesHistory = new ArrayList<>();
-        employeeState = EmployeeState.LOGOUT;
-    }
-
-    String getID() {
-        return ID;
     }
 
     int getNumberOfAnnualLeavesLeft() {
         return numberOfAnnualLeavesLeft;
     }
 
-    boolean compareUserIDAndPassword(String ID, String password) {
-        return this.ID.equals(ID) && this.password.equals(password);
+    List<Leave> getLeavesHistory() {
+        return leavesHistory;
     }
 
-    private void updateNoOfLeavesLeft(int numberOfAnnualLeavesTaken) {
-        this.numberOfAnnualLeavesLeft -= numberOfAnnualLeavesTaken;
+    String getID() {
+        return ID;
     }
 
     EmployeeState getState() {
         return this.employeeState;
     }
 
-    void login() {
-        employeeState = EmployeeState.LOGIN;
+    private void updateNoOfLeavesLeft(int numberOfAnnualLeavesTaken) {
+        this.numberOfAnnualLeavesLeft -= numberOfAnnualLeavesTaken;
+    }
+
+    void login(String password) {
+        if (!this.password.equals(password)) {
+            throw new LoginInvalidException("password is invalid");
+        }
+        this.employeeState = EmployeeState.LOGIN;
     }
 
     void logout() {
@@ -61,7 +63,4 @@ class Employee {
         return LeaveState.APPROVED;
     }
 
-    List<Leave> getLeavesHistory() {
-        return leavesHistory;
-    }
 }

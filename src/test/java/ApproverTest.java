@@ -9,7 +9,7 @@ class ApproverTest {
 
     @BeforeEach
     void init() {
-        approver =  new Approver("id","password");
+        approver =  new Approver("id1","password1");
     }
 
     @Test
@@ -29,13 +29,13 @@ class ApproverTest {
 
     @Test
     void shouldChangeTheApproverStateWhenLogin() {
-        approver.login();
-        assertEquals(EmployeeState.LOGIN,approver.getEmployeeState());
+        approver.login("password1");
+        assertEquals(EmployeeState.LOGIN, approver.getState());
     }
 
     @Test
     void shouldChangeTheApproverStateWhenLogout() {
         approver.logout();
-        assertEquals(EmployeeState.LOGOUT,approver.getEmployeeState());
+        assertEquals(EmployeeState.LOGOUT, approver.getState());
     }
 }

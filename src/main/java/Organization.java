@@ -3,34 +3,32 @@ import java.util.List;
 
 class Organization {
     private List<Employee> employees;
-    private Approver approver;
+    private List<Approver> approvers;
+
 
     Organization() {
         employees = new ArrayList<>();
-        approver = new Approver("id","password");
     }
 
     void addEmployee(Employee employee) {
-        employees.add(employee);
+        this.employees.add(employee);
     }
 
-    boolean employeeLogin(String id, String password) {
-        for (Employee employee : employees) {
-            if (employee.compareUserIDAndPassword(id, password)) {
-                Employee employee1 = getEmployee(id);
-                employee1.login();
-                return true;
+    Approver getApprover(String id){
+        for (Approver approver : approvers) {
+            if (id.equals(approver.getID())) {
+                return approver;
             }
         }
-        return false;
+        throw  new LoginInvalidException("ID is invalid");
     }
 
     Employee getEmployee(String id) {
-        for (Employee employee : employees) {
+        for (Employee employee : this.employees) {
             if (id.equals(employee.getID())) {
                 return employee;
             }
         }
-        return null;
+        throw  new LoginInvalidException("Id is invalid");
     }
 }

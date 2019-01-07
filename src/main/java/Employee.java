@@ -4,13 +4,15 @@ import java.util.List;
 class Employee {
     private String ID;
     private String password;
+    private String approver;
     private EmployeeState employeeState;
     private int numberOfAnnualLeavesLeft;
     private List<Leave> leavesHistory;
 
-    Employee(String ID, String password) {
+    Employee(String ID, String password, String approver) {
         this.ID = ID;
         this.password = password;
+        this.approver = approver;
         this.employeeState = EmployeeState.LOGOUT;
         this.numberOfAnnualLeavesLeft = 10;
         leavesHistory = new ArrayList<>();
@@ -30,6 +32,10 @@ class Employee {
 
     EmployeeState getState() {
         return this.employeeState;
+    }
+
+    public String getApprover() {
+        return approver;
     }
 
     private void updateNoOfLeavesLeft(int numberOfAnnualLeavesTaken) {

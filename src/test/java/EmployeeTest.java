@@ -11,8 +11,8 @@ class EmployeeTest {
 
     @BeforeEach
     void init() {
-        employee = new Employee("revathi", "123456");
-        approver = new Approver("id","password");
+        employee = new Employee("revathi", "123456","approver1");
+        approver = new Approver("id","password","approver2");
     }
 
     @Test

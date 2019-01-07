@@ -9,7 +9,7 @@ class ApproverTest {
 
     @BeforeEach
     void init() {
-        approver =  new Approver("id1","password1");
+        approver =  new Approver("id1","password1","approver1");
     }
 
     @Test

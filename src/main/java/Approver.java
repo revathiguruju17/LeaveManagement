@@ -4,11 +4,12 @@ import java.util.List;
 class Approver extends Employee {
     private String ID;
     private String password;
+    private String approver;
     private List<Leave> leaveRequests;
     private EmployeeState employeeState;
 
-    Approver(String ID, String password) {
-        super(ID, password);
+    Approver(String ID, String password, String approver) {
+        super(ID, password, approver);
         this.leaveRequests = new ArrayList<>();
     }
 

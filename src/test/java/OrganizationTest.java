@@ -10,7 +10,7 @@ class OrganizationTest {
     @BeforeEach
     void init() {
         organization = new Organization();
-        employee = new Employee("id1", "password1");
+        employee = new Employee("id1", "password1","approver1");
         organization.addEmployee(employee);
     }
 
@@ -21,6 +21,6 @@ class OrganizationTest {
 
     @Test
     void shouldReturnNullWhenTheUserIsInvalid() {
-        assertNull(organization.getEmployee("id2"));
+        assertThrows(LoginInvalidException.class,()->organization.getEmployee("id2"));
     }
 }

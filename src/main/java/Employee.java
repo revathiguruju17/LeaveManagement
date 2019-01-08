@@ -58,6 +58,9 @@ class Employee {
     }
 
     LeaveState applyLeave(Leave leave, Organization organization) {
+        if (!DateValidator.checkWhetherTheLeaveAppliedIsForFutureOrNot(leave.getStartDate(), leave.getEndDate())) {
+            throw new DateInvalidException("entered date is invalid");
+        }
         if (leave.getLeaveType() == LeaveType.ANNUAL) {
             Approver approver = organization.getApprover(this.approver);
             LeaveState leaveState = approver.approveLeave(numberOfAnnualLeavesLeft, leave.getNumberOfLeaves());

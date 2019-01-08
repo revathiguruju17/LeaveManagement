@@ -2,16 +2,16 @@ import java.util.Date;
 
 class Leave {
     private String employeeID;
-    private Date fromDate;
-    private Date toDate;
+    private Date startDate;
+    private Date endDate;
     private int NumberOfLeaves;
     private LeaveState leaveState;
     private LeaveType leaveType;
 
-    Leave(int NumberOfLeaves, Date fromDate, Date toDate, LeaveType leaveType) {
+    Leave(int NumberOfLeaves, Date startDate, Date endDate, LeaveType leaveType) {
         this.NumberOfLeaves = NumberOfLeaves;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.leaveType = leaveType;
     }
 
@@ -33,5 +33,13 @@ class Leave {
 
     public void setID() {
         this.employeeID = employeeID;
+    }
+
+    Date getStartDate() {
+        return startDate;
+    }
+
+    Date getEndDate() {
+        return endDate;
     }
 }

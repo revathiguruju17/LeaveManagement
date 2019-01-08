@@ -33,4 +33,7 @@ class Leave {
         return (int) Math.abs(difference);
     }
 
+    int getEmployeeID() {
+        return this.employeeID;
+    }
 }

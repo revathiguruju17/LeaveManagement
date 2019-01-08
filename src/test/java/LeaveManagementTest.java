@@ -11,50 +11,66 @@ import static org.junit.jupiter.api.Assertions.*;
 class LeaveManagementTest {
     private LeaveManagement leaveManagement;
     private Organization organization;
+    private Leave leave1;
     private Approver approver;
-    private SimpleDateFormat simpleDateFormat;
+    private Employee employee1;
 
     @BeforeEach
-    void init() {
-        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    void init() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date startDate1 = simpleDateFormat.parse("22-01-2019");
+        Date endDate1 = simpleDateFormat.parse("24-01-2019");
+        leave1 = new Leave(startDate1, endDate1);
         leaveManagement = new LeaveManagement();
         organization = new Organization();
-        Employee employee = new Employee(1, "password1", 2);
-        approver = new Approver(2, "password2", 2);
-        organization.addEmployee(employee);
+        employee1 = new Employee(1, "password1", 4);
+        Employee employee2 = new Employee(2, "password2", 4);
+        Employee employee3 = new Employee(3, "password3", 4);
+        approver = new Approver(4, "password4", 4);
+        organization.addEmployee(employee1);
+        organization.addEmployee(employee2);
+        organization.addEmployee(employee3);
         organization.addApprover(approver);
-    }
-
-    @Test
-    void shouldReturnLeaveStateAsApprovedIfTheApproverApprovesTheLeave() throws ParseException {
-        Date startDate = simpleDateFormat.parse("30-1-2019");
-        Date endDate = simpleDateFormat.parse("30-1-2019");
-        Leave leave = new Leave(startDate, endDate);
-        LeaveState leaveState = leaveManagement.applyLeave(1, "password1", leave, organization);
-        assertEquals(LeaveState.APPROVED, leaveState);
-    }
-
-    @Test
-    void shouldReturnInvalidIDExceptionIfTheUserIDAndPasswordIsInvalid() throws ParseException {
-        Date startDate = simpleDateFormat.parse("20-01-2019");
-        Date endDate = simpleDateFormat.parse("21-01-2019");
-        Leave leave = new Leave(startDate, endDate);
-        assertThrows(LoginInvalidException.class, () -> leaveManagement.applyLeave(2, "password", leave, organization));
-    }
-
-    @Test
-    void shouldReturnLeaveStateAsPartiallyApprovedIfTheAnnualLeavesAreLessThanAppliedLeaves() throws ParseException {
-        Date startDate = simpleDateFormat.parse("15-01-2019");
-        Date endDate = simpleDateFormat.parse("30-01-2019");
-        Leave leave = new Leave(startDate, endDate);
-        LeaveState leaveState = leaveManagement.applyLeave(1, "password1", leave, organization);
-        assertEquals(LeaveState.PARTIALLY_APPROVED, leaveState);
     }
 
 
     @Test
     void shouldReturnEmptyListIfTheEmployeeDoesNotApplyForALeave() {
-        List<Leave> leaves = leaveManagement.getEmployeeLeaveHistory(1, "password1", organization);
+        List<Leave> leaves = leaveManagement.getAnEmployeeLeaveHistory(1, "password1", organization);
         assertTrue(leaves.isEmpty());
+    }
+
+    @Test
+    void shouldAddLeaveRequestsInTheApproverWhenAnEmployeeApplyForALeave() {
+        leaveManagement.applyLeave(1, "password1", organization, leave1);
+        leaveManagement.applyLeave(2, "password2", organization, leave1);
+        leaveManagement.applyLeave(3, "password3", organization, leave1);
+        List<Leave> leaveRequests = approver.getLeaveRequests();
+        assertEquals(leave1,leaveRequests.get(0));
+        assertEquals(leave1,leaveRequests.get(1));
+        assertEquals(leave1,leaveRequests.get(2));
+    }
+
+    @Test
+    void shouldDeleteTheLeaveRequestWhenApproverVisitsThatLeaveRequest(){
+        leaveManagement.applyLeave(1, "password1", organization, leave1);
+        leaveManagement.validateLeaveRequest(4,"password4",organization);
+        List<Leave> leaveRequests = approver.getLeaveRequests();
+        assertTrue(leaveRequests.isEmpty());
+    }
+
+    @Test
+    void shouldNotAddLeaveUntilApproverVisitsTheLeaveRequest(){
+        leaveManagement.applyLeave(1,"password1",organization,leave1);
+        List<Leave> leaves = employee1.getLeavesHistory();
+        assertFalse(leaves.contains(leave1));
+    }
+
+    @Test
+    void shouldAddLeaveHistoryInEmployeeObjectWhenApproverApprovesTheLeaveRequest(){
+        leaveManagement.applyLeave(1,"password1",organization,leave1);
+        leaveManagement.validateLeaveRequest(4,"password4",organization);
+        List<Leave> leaveHistory = employee1.getLeavesHistory();
+        assertTrue(leaveHistory.contains(leave1));
     }
 }

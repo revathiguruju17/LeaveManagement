@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 class Organization {
@@ -35,5 +36,18 @@ class Organization {
 
     void addApprover(Approver approver) {
         approvers.add(approver);
+    }
+
+    List<Leave> getEmployeesLeaveHistoryBasedOnDate(Date date) {
+        List<Leave> leaves = new ArrayList<>();
+        for (Employee employee : employees) {
+            List<Leave> employeeLeaves = employee.getLeavesHistory();
+            for (Leave leave : employeeLeaves) {
+                if (date.compareTo(leave.getStartDate()) >= 0 && leave.getEndDate().compareTo(date) >= 0) {
+                    leaves.add(leave);
+                }
+            }
+        }
+        return leaves;
     }
 }

@@ -1,12 +1,10 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 class Approver extends Employee {
-    private int ID;
-    private String password;
-    private int approver;
+
     private List<Leave> leaveRequests;
-    private EmployeeState employeeState;
 
     Approver(int ID, String password, int approver) {
         super(ID, password, approver);
@@ -25,5 +23,19 @@ class Approver extends Employee {
 
     void addLeaveRequest(Leave leave) {
         leaveRequests.add(leave);
+    }
+
+    List<Leave> getLeaveHistoryBasedOnTheDate(Date date) {
+        List<Leave> leaves = new ArrayList<>();
+        for (Leave leave : leaveRequests) {
+            if (date.compareTo(leave.getStartDate()) >= 0 && leave.getEndDate().compareTo(date) >= 0) {
+                leaves.add(leave);
+            }
+        }
+        return leaves;
+    }
+
+    public List<Leave> getLeaveRequests() {
+        return leaveRequests;
     }
 }

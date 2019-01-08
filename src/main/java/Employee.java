@@ -54,7 +54,21 @@ class Employee {
         return approverID;
     }
 
-    int getNumberOfAnnualLeavesLeft() {
+    void addLeaveToLeaveHistory(Leave leave) {
+        this.leavesHistory.add(leave);
+    }
+
+    void applyLeave(int id, String password, Leave leave, Organization organization) {
+        login(password);
+        if (DateValidator.checkWhetherTheLeaveAppliedIsForFutureOrNot(leave.getStartDate(), leave.getEndDate())) {
+            Approver approver = organization.getApprover(getApproverID());
+            leave.setEmployeeID(id);
+            approver.addLeaveRequest(leave);
+        }
+        throw new DateInvalidException("date is invalid");
+    }
+
+    int getNumberOfLeavesLeft() {
         return numberOfAnnualLeavesLeft;
     }
 }

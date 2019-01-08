@@ -16,7 +16,7 @@ class LeaveManagementTest {
 
     @BeforeEach
     void init() {
-        simpleDateFormat = new SimpleDateFormat("dd-mm-yyyy");
+        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         leaveManagement = new LeaveManagement();
         organization = new Organization();
         Employee employee = new Employee(1, "password1", 2);
@@ -27,26 +27,26 @@ class LeaveManagementTest {
 
     @Test
     void shouldReturnLeaveStateAsApprovedIfTheApproverApprovesTheLeave() throws ParseException {
-        Date startDate = simpleDateFormat.parse("02-12-2018");
-        Date endDate = simpleDateFormat.parse("03-12-2018");
-        Leave leave = new Leave(2, startDate, endDate, LeaveType.ANNUAL);
+        Date startDate = simpleDateFormat.parse("30-1-2019");
+        Date endDate = simpleDateFormat.parse("30-1-2019");
+        Leave leave = new Leave(startDate, endDate);
         LeaveState leaveState = leaveManagement.applyLeave(1, "password1", leave, organization);
         assertEquals(LeaveState.APPROVED, leaveState);
     }
 
     @Test
     void shouldReturnInvalidIDExceptionIfTheUserIDAndPasswordIsInvalid() throws ParseException {
-        Date startDate = simpleDateFormat.parse("02-12-2018");
-        Date endDate = simpleDateFormat.parse("03-12-2018");
-        Leave leave = new Leave(2, startDate, endDate, LeaveType.ANNUAL);
+        Date startDate = simpleDateFormat.parse("20-01-2019");
+        Date endDate = simpleDateFormat.parse("21-01-2019");
+        Leave leave = new Leave(startDate, endDate);
         assertThrows(LoginInvalidException.class, () -> leaveManagement.applyLeave(2, "password", leave, organization));
     }
 
     @Test
-    void shouldReturnLeaveStateAsPartiallyApprovedIfTheAnnualLeavesAreLessThanAppliedLeaves() throws ParseException{
-        Date startDate = simpleDateFormat.parse("02-12-2018");
-        Date endDate = simpleDateFormat.parse("16-12-2018");
-        Leave leave = new Leave(15, startDate, endDate, LeaveType.ANNUAL);
+    void shouldReturnLeaveStateAsPartiallyApprovedIfTheAnnualLeavesAreLessThanAppliedLeaves() throws ParseException {
+        Date startDate = simpleDateFormat.parse("15-01-2019");
+        Date endDate = simpleDateFormat.parse("30-01-2019");
+        Leave leave = new Leave(startDate, endDate);
         LeaveState leaveState = leaveManagement.applyLeave(1, "password1", leave, organization);
         assertEquals(LeaveState.PARTIALLY_APPROVED, leaveState);
     }
@@ -56,15 +56,5 @@ class LeaveManagementTest {
     void shouldReturnEmptyListIfTheEmployeeDoesNotApplyForALeave() {
         List<Leave> leaves = leaveManagement.getEmployeeLeaveHistory(1, "password1", organization);
         assertTrue(leaves.isEmpty());
-    }
-
-    @Test
-    void shouldReturnLeaveHistoryWhenEmployeeEnterValidID() throws ParseException{
-        Date startDate = simpleDateFormat.parse("02-12-2018");
-        Date endDate = simpleDateFormat.parse("03-12-2018");
-        Leave leave = new Leave(2, startDate, endDate, LeaveType.ANNUAL);
-        leaveManagement.applyLeave(1, "password1", leave, organization);
-        List<Leave> leaves = leaveManagement.getEmployeeLeaveHistory(1, "password1", organization);
-        assertTrue(leaves.contains(leave));
     }
 }

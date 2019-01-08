@@ -8,12 +8,12 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DateValidatorTest {
+class DateValidatorTest {
     private SimpleDateFormat simpleDateFormat;
 
     @BeforeEach
     void init(){
-        simpleDateFormat = new SimpleDateFormat("dd-mm-yyyy");
+        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
     }
 
     @Test

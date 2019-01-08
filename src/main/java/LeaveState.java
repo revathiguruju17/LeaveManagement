@@ -1,5 +1,5 @@
 public enum LeaveState {
     APPROVED,
     REJECTED,
-    PARTIALLY_APPROVED,
+    PARTIALLY_APPROVED
 }

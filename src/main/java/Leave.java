@@ -1,38 +1,15 @@
 import java.util.Date;
 
 class Leave {
-    private String employeeID;
+    private int employeeID;
     private Date startDate;
     private Date endDate;
     private int NumberOfLeaves;
-    private LeaveState leaveState;
-    private LeaveType leaveType;
 
-    Leave(int NumberOfLeaves, Date startDate, Date endDate, LeaveType leaveType) {
-        this.NumberOfLeaves = NumberOfLeaves;
+    Leave(Date startDate, Date endDate) {
+        this.NumberOfLeaves = durationBetweenTwoDates(startDate, endDate);
         this.startDate = startDate;
         this.endDate = endDate;
-        this.leaveType = leaveType;
-    }
-
-    int getNumberOfLeaves() {
-        return NumberOfLeaves;
-    }
-
-    LeaveType getLeaveType() {
-        return leaveType;
-    }
-
-    void setLeaveState(LeaveState leaveState) {
-        this.leaveState = leaveState;
-    }
-
-    void setNumberOfLeaves(int numberOfLeaves) {
-        NumberOfLeaves = numberOfLeaves;
-    }
-
-    public void setID() {
-        this.employeeID = employeeID;
     }
 
     Date getStartDate() {
@@ -42,4 +19,18 @@ class Leave {
     Date getEndDate() {
         return endDate;
     }
+
+    int getNumberOfLeaves() {
+        return NumberOfLeaves;
+    }
+
+    void setEmployeeID(int ID) {
+        this.employeeID = ID;
+    }
+
+    private int durationBetweenTwoDates(Date one, Date two) {
+        long difference = (one.getTime() - two.getTime()) / 86400000;
+        return (int) Math.abs(difference);
+    }
+
 }

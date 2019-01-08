@@ -2,14 +2,15 @@ import java.util.List;
 
 class LeaveManagement {
 
-    LeaveState applyLeave(String id, String password, Leave leave, Organization organization, Approver approver) {
+    LeaveState applyLeave(int id, String password, Leave leave, Organization organization) {
         Employee employee = organization.getEmployee(id);
         employee.login(password);
-        return employee.applyLeave(leave, approver);
+        return employee.applyLeave(leave, organization);
     }
 
-    List<Leave> getEmployeeLeaveHistory(String id, String password, Organization organization) {
+    List<Leave> getEmployeeLeaveHistory(int id, String password, Organization organization) {
         Employee employee = organization.getEmployee(id);
+        employee.login(password);
         return employee.getLeavesHistory();
     }
 }

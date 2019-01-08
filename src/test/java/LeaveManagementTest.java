@@ -1,6 +1,8 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -15,17 +17,19 @@ class LeaveManagementTest {
     void init() {
         leaveManagement = new LeaveManagement();
         organization = new Organization();
-        approver = new Approver("id2","password1","approver1");
-        Employee employee = new Employee("id1", "password1","approver2");
+        Employee employee = new Employee(1, "password1", 2);
+        approver = new Approver(2, "password2", 2);
         organization.addEmployee(employee);
+        organization.addApprover(approver);
     }
 
     @Test
-    void shouldReturnLeaveStateAsApprovedIfTheApproverApprovesTheLeave() {
-        Date startDate = new Date(2018, 12, 2);
-        Date endDate = new Date(2018, 12, 3);
+    void shouldReturnLeaveStateAsApprovedIfTheApproverApprovesTheLeave() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-mm-yyyy");
+        Date startDate = simpleDateFormat.parse("02-12-2018");
+        Date endDate = simpleDateFormat.parse("03-12-2018");
         Leave leave = new Leave(2, startDate, endDate, LeaveType.ANNUAL);
-        LeaveState leaveState = leaveManagement.applyLeave("id1", "password1", leave, organization, approver);
+        LeaveState leaveState = leaveManagement.applyLeave(1, "password1", leave, organization);
         assertEquals(LeaveState.APPROVED, leaveState);
     }
 
@@ -34,7 +38,7 @@ class LeaveManagementTest {
         Date startDate = new Date(2018, 12, 2);
         Date endDate = new Date(2018, 12, 3);
         Leave leave = new Leave(2, startDate, endDate, LeaveType.ANNUAL);
-        assertThrows(LoginInvalidException.class, () -> leaveManagement.applyLeave("id", "password", leave, organization, approver));
+        assertThrows(LoginInvalidException.class, () -> leaveManagement.applyLeave(2, "password", leave, organization));
     }
 
     @Test
@@ -42,14 +46,14 @@ class LeaveManagementTest {
         Date startDate = new Date(2018, 12, 2);
         Date endDate = new Date(2018, 12, 16);
         Leave leave = new Leave(15, startDate, endDate, LeaveType.ANNUAL);
-        LeaveState leaveState = leaveManagement.applyLeave("id1", "password1", leave, organization, approver);
+        LeaveState leaveState = leaveManagement.applyLeave(1, "password1", leave, organization);
         assertEquals(LeaveState.PARTIALLY_APPROVED, leaveState);
     }
 
 
     @Test
-    void shouldReturnEmptyListIfTheEmployeeDoesNotApplyForALeave(){
-        List<Leave> leaves = leaveManagement.getEmployeeLeaveHistory("id1", "password1", organization);
+    void shouldReturnEmptyListIfTheEmployeeDoesNotApplyForALeave() {
+        List<Leave> leaves = leaveManagement.getEmployeeLeaveHistory(1, "password1", organization);
         assertTrue(leaves.isEmpty());
     }
 
@@ -58,8 +62,8 @@ class LeaveManagementTest {
         Date startDate = new Date(2018, 12, 2);
         Date endDate = new Date(2018, 12, 3);
         Leave leave = new Leave(2, startDate, endDate, LeaveType.ANNUAL);
-        leaveManagement.applyLeave("id1", "password1", leave, organization, approver);
-        List<Leave> leaves = leaveManagement.getEmployeeLeaveHistory("id1", "password1", organization);
+        leaveManagement.applyLeave(1, "password1", leave, organization);
+        List<Leave> leaves = leaveManagement.getEmployeeLeaveHistory(1, "password1", organization);
         assertTrue(leaves.contains(leave));
     }
 }

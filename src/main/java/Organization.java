@@ -8,27 +8,32 @@ class Organization {
 
     Organization() {
         employees = new ArrayList<>();
+        approvers = new ArrayList<>();
     }
 
     void addEmployee(Employee employee) {
         this.employees.add(employee);
     }
 
-    Approver getApprover(String id){
+    Approver getApprover(int id) {
         for (Approver approver : approvers) {
-            if (id.equals(approver.getID())) {
+            if (approver.checkID(id)) {
                 return approver;
             }
         }
-        throw  new LoginInvalidException("ID is invalid");
+        throw new LoginInvalidException("ID is invalid");
     }
 
-    Employee getEmployee(String id) {
-        for (Employee employee : this.employees) {
-            if (id.equals(employee.getID())) {
+    Employee getEmployee(int id) {
+        for (Employee employee : employees) {
+            if (employee.checkID(id)) {
                 return employee;
             }
         }
-        throw  new LoginInvalidException("Id is invalid");
+        throw new LoginInvalidException("Id is invalid");
+    }
+
+    void addApprover(Approver approver) {
+        approvers.add(approver);
     }
 }

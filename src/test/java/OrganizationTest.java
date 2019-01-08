@@ -1,26 +1,34 @@
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrganizationTest {
-    private Organization organization;
-    private Employee employee;
 
-    @BeforeEach
-    void init() {
-        organization = new Organization();
-        employee = new Employee("id1", "password1","approver1");
-        organization.addEmployee(employee);
+    @Test
+    void shouldReturnCorrectEmployeeWhenTheUserGivesValidID() {
+        Organization organization = new Organization();
+        Employee employee1 = new Employee(1,"password1", 2);
+        organization.addEmployee(employee1);
+        assertEquals(employee1, organization.getEmployee(1));
     }
 
     @Test
-    void shouldReturnCorrectEmployeeWhenTheUserGivesID() {
-        assertEquals(employee, organization.getEmployee("id1"));
+    void shouldThrowExceptionWhenTheEmployeeIDIsInvalid() {
+        Organization organization = new Organization();
+        assertThrows(LoginInvalidException.class, () -> organization.getEmployee(4));
     }
 
     @Test
-    void shouldReturnNullWhenTheUserIsInvalid() {
-        assertThrows(LoginInvalidException.class,()->organization.getEmployee("id2"));
+    void shouldReturnCorrectApproverWhenApproverGivesValidID(){
+        Organization organization = new Organization();
+        Approver approver1 = new Approver(2,"password1", 3);
+        organization.addEmployee(approver1);
+        assertEquals(approver1,organization.getEmployee(2));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenTheApproverIDIsInvalid() {
+        Organization organization = new Organization();
+        assertThrows(LoginInvalidException.class, () -> organization.getEmployee(1));
     }
 }

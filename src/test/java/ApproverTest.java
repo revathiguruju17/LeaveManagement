@@ -9,7 +9,7 @@ class ApproverTest {
 
     @BeforeEach
     void init() {
-        approver =  new Approver("id1","password1","approver1");
+        approver =  new Approver(1,"password1",1);
     }
 
     @Test
@@ -18,7 +18,7 @@ class ApproverTest {
     }
 
     @Test
-    void shouldReturnNoLeavesLeftMessageIfTheAnnualLeavesAreOver() {
+    void shouldReturnRejectedMessageIfTheAnnualLeavesAreOver() {
         assertEquals(LeaveState.REJECTED, approver.approveLeave(0, 4));
     }
 

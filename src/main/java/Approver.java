@@ -2,13 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Approver extends Employee {
-    private String ID;
+    private int ID;
     private String password;
-    private String approver;
+    private int approver;
     private List<Leave> leaveRequests;
     private EmployeeState employeeState;
 
-    Approver(String ID, String password, String approver) {
+    Approver(int ID, String password, int approver) {
         super(ID, password, approver);
         this.leaveRequests = new ArrayList<>();
     }

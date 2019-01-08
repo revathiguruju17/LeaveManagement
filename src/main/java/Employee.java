@@ -2,14 +2,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Employee {
-    private String ID;
+    private int ID;
     private String password;
-    private String approver;
+    private int approver;
     private EmployeeState employeeState;
     private int numberOfAnnualLeavesLeft;
     private List<Leave> leavesHistory;
 
-    Employee(String ID, String password, String approver) {
+    Employee(int ID, String password, int approver) {
         this.ID = ID;
         this.password = password;
         this.approver = approver;
@@ -26,7 +26,7 @@ class Employee {
         return leavesHistory;
     }
 
-    String getID() {
+    int getID() {
         return ID;
     }
 
@@ -34,8 +34,12 @@ class Employee {
         return this.employeeState;
     }
 
-    public String getApprover() {
+    public int getApprover() {
         return approver;
+    }
+
+    boolean checkID(int id) {
+        return id == this.ID;
     }
 
     private void updateNoOfLeavesLeft(int numberOfAnnualLeavesTaken) {
@@ -53,8 +57,9 @@ class Employee {
         employeeState = EmployeeState.LOGOUT;
     }
 
-    LeaveState applyLeave(Leave leave, Approver approver) {
+    LeaveState applyLeave(Leave leave, Organization organization) {
         if (leave.getLeaveType() == LeaveType.ANNUAL) {
+            Approver approver = organization.getApprover(this.approver);
             LeaveState leaveState = approver.approveLeave(numberOfAnnualLeavesLeft, leave.getNumberOfLeaves());
             leave.setLeaveState(leaveState);
             if (leaveState == LeaveState.PARTIALLY_APPROVED) {
@@ -68,5 +73,4 @@ class Employee {
         }
         return LeaveState.APPROVED;
     }
-
 }

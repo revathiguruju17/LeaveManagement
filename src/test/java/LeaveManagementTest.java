@@ -37,8 +37,8 @@ class LeaveManagementTest {
         organization.addEmployee(employee1);
         organization.addEmployee(employee2);
         organization.addEmployee(employee3);
-        organization.addApprover(approver1);
-        organization.addApprover(approver2);
+        organization.addEmployee(approver1);
+        organization.addEmployee(approver2);
     }
 
 

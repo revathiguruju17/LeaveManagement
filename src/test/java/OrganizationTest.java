@@ -77,8 +77,8 @@ class OrganizationTest {
 
     @Test
     void shouldReturnEmptyLeaveHistoryOfApproverIfTheDateIsNotMatched() throws ParseException{
-        Approver approver = Mockito.mock(Approver.class);
-        organization.addApprover(approver);
+        Employee approver = Mockito.mock(Approver.class);
+        organization.addEmployee(approver);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date startDate = simpleDateFormat.parse("21-01-2018");
         Date endDate = simpleDateFormat.parse("23-01-2018");
@@ -92,8 +92,8 @@ class OrganizationTest {
 
     @Test
     void shouldReturnApproverLeaveHistoryBasedOnDate() throws ParseException {
-        Approver approver = Mockito.mock(Approver.class);
-        organization.addApprover(approver);
+        Employee approver = Mockito.mock(Approver.class);
+        organization.addEmployee(approver);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date startDate = simpleDateFormat.parse("21-01-2019");
         Date endDate = simpleDateFormat.parse("23-01-2019");
@@ -101,6 +101,6 @@ class OrganizationTest {
         List<Leave> leaves = new ArrayList<>();
         leaves.add(leave);
         when(approver.getLeavesHistory()).thenReturn(leaves);
-        assertEquals(leaves,organization.getApproversLeaveHistoryBasedOnDate(startDate));
+        assertEquals(leaves,organization.getEmployeesLeaveHistoryBasedOnDate(startDate));
     }
 }

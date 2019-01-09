@@ -9,7 +9,7 @@ class LeaveManagement {
     }
 
     List<Leave> getAllEmployeesLeaveHistoryBasedOnGivenDate(Date date, Organization organization, int approverID, String password) {
-        Approver approver = organization.getApprover(approverID);
+        Employee approver = organization.getEmployee(approverID);
         approver.login(password);
         return organization.getEmployeesLeaveHistoryBasedOnDate(date);
     }
@@ -21,13 +21,13 @@ class LeaveManagement {
         if (!isDateValid) {
             throw new DateInvalidException("invalid date");
         }
-        Approver approver = organization.getApprover(employee.getApproverID());
+        Approver approver = (Approver)organization.getEmployee(employee.getApproverID());
         leave.setEmployeeID(employeeID);
         approver.addLeaveRequest(leave);
     }
 
     void validateLeaveRequest(int approverID, String password, Organization organization) {
-        Approver approver = organization.getApprover(approverID);
+        Approver approver = (Approver)organization.getEmployee(approverID);
         approver.login(password);
         List<Leave> leaveRequests = approver.getLeaveRequests();
         while (leaveRequests.size() != 0) {

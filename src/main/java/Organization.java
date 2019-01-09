@@ -50,4 +50,17 @@ class Organization {
         }
         return leaves;
     }
+
+    List<Leave> getApproversLeaveHistoryBasedOnDate(Date date) {
+        List<Leave> leaves = new ArrayList<>();
+        for (Approver approver : approvers) {
+            List<Leave> employeeLeaves = approver.getLeavesHistory();
+            for (Leave leave : employeeLeaves) {
+                if (date.compareTo(leave.getStartDate()) >= 0 && leave.getEndDate().compareTo(date) >= 0) {
+                    leaves.add(leave);
+                }
+            }
+        }
+        return leaves;
+    }
 }

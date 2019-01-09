@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 class Approver extends Employee {
@@ -23,16 +22,6 @@ class Approver extends Employee {
 
     void addLeaveRequest(Leave leave) {
         leaveRequests.add(leave);
-    }
-
-    List<Leave> getLeaveHistoryBasedOnTheDate(Date date) {
-        List<Leave> leaves = new ArrayList<>();
-        for (Leave leave : leaveRequests) {
-            if (date.compareTo(leave.getStartDate()) >= 0 && leave.getEndDate().compareTo(date) >= 0) {
-                leaves.add(leave);
-            }
-        }
-        return leaves;
     }
 
     List<Leave> getLeaveRequests() {

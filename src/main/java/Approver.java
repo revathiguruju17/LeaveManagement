@@ -35,7 +35,7 @@ class Approver extends Employee {
         return leaves;
     }
 
-    public List<Leave> getLeaveRequests() {
+    List<Leave> getLeaveRequests() {
         return leaveRequests;
     }
 }

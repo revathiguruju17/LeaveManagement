@@ -25,9 +25,7 @@ class Employee  {
         return this.employeeState;
     }
 
-    boolean checkID(int id) {
-        return id == this.ID;
-    }
+    boolean checkID(int id) { return id == this.ID; }
 
     void updateNoOfLeavesLeft(LeaveState leaveState, int numberOfAnnualLeavesTaken) {
         if (leaveState == LeaveState.APPROVED) {
@@ -44,23 +42,17 @@ class Employee  {
         this.employeeState = EmployeeState.LOGIN;
     }
 
-    void logout() {
-        employeeState = EmployeeState.LOGOUT;
-    }
+    void logout() { employeeState = EmployeeState.LOGOUT; }
 
-    void addLeaveToLeaveHistory(Leave leave) {
-        this.leavesHistory.add(leave);
-    }
+    void addLeaveToLeaveHistory(Leave leave) { this.leavesHistory.add(leave); }
 
     int getNumberOfLeavesLeft() {
         return numberOfAnnualLeavesLeft;
     }
 
-    boolean
-    checkLeaveRequester(Employee employee) {
+    boolean checkLeaveRequester(Employee employee) {
         return false;
     }
-
 
     public List<Leave> getLeaveRequests() {
         return null;
@@ -70,9 +62,7 @@ class Employee  {
         return null;
     }
 
-    public void addLeaveRequest(Leave leave) {
-    }
+    public void addLeaveRequest(Leave leave) { }
 
-    public void addLeaveRequester(Employee employee) {
-    }
+    public void addLeaveRequester(Employee employee) { }
 }

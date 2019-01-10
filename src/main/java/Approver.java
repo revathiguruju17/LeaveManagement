@@ -4,10 +4,12 @@ import java.util.List;
 class Approver extends Employee {
 
     private List<Leave> leaveRequests;
+    private List<Integer> leaveRequesters;
 
-    Approver(int ID, String password, int approver) {
-        super(ID, password, approver);
+    Approver(int ID, String password) {
+        super(ID, password);
         this.leaveRequests = new ArrayList<>();
+        this.leaveRequesters = new ArrayList<>();
     }
 
     LeaveState approveLeave(int numberOfLeavesLeft, int numberOfLeavesWant) {
@@ -24,7 +26,21 @@ class Approver extends Employee {
         leaveRequests.add(leave);
     }
 
+    void addLeaveRequester(int ID) {
+        leaveRequesters.add(ID);
+    }
+
     List<Leave> getLeaveRequests() {
         return leaveRequests;
+    }
+
+    @Override
+    boolean checkLeaveRequester(int ID) {
+        for (int requestor : leaveRequesters) {
+            if (requestor == ID) {
+                return true;
+            }
+        }
+        return false;
     }
 }

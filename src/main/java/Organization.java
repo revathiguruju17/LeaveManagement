@@ -35,4 +35,13 @@ class Organization {
         }
         return leaves;
     }
+
+    Approver getApprover(int employeeID) {
+        for (Employee employee : employees) {
+            if (employee.checkLeaveRequester(employeeID)) {
+                return (Approver) employee;
+            }
+        }
+        return null;
+    }
 }

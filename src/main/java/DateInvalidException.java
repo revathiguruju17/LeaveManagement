@@ -1,4 +1,4 @@
-public class DateInvalidException extends RuntimeException {
+class DateInvalidException extends RuntimeException {
     DateInvalidException(String message){
         super(message);
     }

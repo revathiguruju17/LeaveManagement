@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 class ApproverTest {
@@ -9,7 +9,7 @@ class ApproverTest {
 
     @BeforeEach
     void init() {
-        approver = new Approver(1, "password1", 1);
+        approver = new Approver(1, "password1");
     }
 
     @Test
@@ -37,5 +37,16 @@ class ApproverTest {
     void shouldChangeTheApproverStateWhenLogout() {
         approver.logout();
         assertEquals(EmployeeState.LOGOUT, approver.getState());
+    }
+
+    @Test
+    void shouldReturnTrueIfTheApproverHasLeaveRequesterID(){
+        approver.addLeaveRequester(1);
+        assertTrue(approver.checkLeaveRequester(1));
+    }
+
+    @Test
+    void shouldReturnFalseIfTheApproverDoesNotHaveLeaveRequesterID(){
+        assertFalse(approver.checkLeaveRequester(1));
     }
 }

@@ -8,12 +8,6 @@ class LeaveManagement {
         return employee.getLeavesHistory();
     }
 
-    List<Leave> getAllEmployeesLeaveHistoryBasedOnGivenDate(Date date, Organization organization, int approverID, String password) {
-        Employee approver = organization.getEmployee(approverID);
-        approver.login(password);
-        return organization.getEmployeesLeaveHistoryBasedOnDate(date);
-    }
-
     void applyLeave(int employeeID, String password, Organization organization, Leave leave) {
         Employee employee = organization.getEmployee(employeeID);
         employee.login(password);
@@ -21,13 +15,19 @@ class LeaveManagement {
         if (!isDateValid) {
             throw new DateInvalidException("invalid date");
         }
-        Approver approver = (Approver)organization.getEmployee(employee.getApproverID());
+        Approver approver = organization.getApprover(employeeID);
         leave.setEmployeeID(employeeID);
         approver.addLeaveRequest(leave);
     }
 
+    List<Leave> getAllEmployeesLeaveHistoryBasedOnGivenDate(Date date, Organization organization, int approverID, String password) {
+        Employee approver = organization.getEmployee(approverID);
+        approver.login(password);
+        return organization.getEmployeesLeaveHistoryBasedOnDate(date);
+    }
+
     void validateLeaveRequest(int approverID, String password, Organization organization) {
-        Approver approver = (Approver)organization.getEmployee(approverID);
+        Approver approver = (Approver) organization.getEmployee(approverID);
         approver.login(password);
         List<Leave> leaveRequests = approver.getLeaveRequests();
         while (leaveRequests.size() != 0) {

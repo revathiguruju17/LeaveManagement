@@ -10,7 +10,7 @@ class EmployeeTest {
 
     @BeforeEach
     void init() {
-        employee = new Employee(1, "password1", 3);
+        employee = new Employee(1, "password1");
         leave = Mockito.mock(Leave.class);
     }
 

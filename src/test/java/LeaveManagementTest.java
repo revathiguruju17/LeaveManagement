@@ -15,7 +15,6 @@ class LeaveManagementTest {
     private Leave leave1;
     private Leave leave2;
     private Approver approver1;
-    private Approver approver2;
     private Employee employee1;
 
     @BeforeEach
@@ -29,18 +28,18 @@ class LeaveManagementTest {
         leave2 = new Leave(startDate2, endDate2);
         leaveManagement = new LeaveManagement();
         organization = new Organization();
-        employee1 = new Employee(1, "password1", 4);
-        Employee employee2 = new Employee(2, "password2", 4);
-        Employee employee3 = new Employee(3, "password3", 4);
-        approver1 = new Approver(4, "password4", 5);
-        approver2 = new Approver(5, "password5", 4);
+        employee1 = new Employee(1, "password1");
+        Employee employee2 = new Employee(2, "password2");
+        Employee employee3 = new Employee(3, "password3");
+        approver1 = new Approver(4, "password4");
+        approver1.addLeaveRequester(1);
+        approver1.addLeaveRequester(2);
+        approver1.addLeaveRequester(3);
         organization.addEmployee(employee1);
         organization.addEmployee(employee2);
         organization.addEmployee(employee3);
         organization.addEmployee(approver1);
-        organization.addEmployee(approver2);
     }
-
 
     @Test
     void shouldReturnEmptyListIfTheEmployeeDoesNotApplyForALeave() {
@@ -50,7 +49,8 @@ class LeaveManagementTest {
 
     @Test
     void shouldThrowExceptionIfTheUserApplyLeaveWithWrongID() {
-        assertThrows(LoginInvalidException.class, () -> leaveManagement.applyLeave(6, "password1", organization, leave1));
+        assertThrows(LoginInvalidException.class, () -> leaveManagement.
+                applyLeave(6, "password1", organization, leave1));
     }
 
     @Test
@@ -65,8 +65,9 @@ class LeaveManagementTest {
     }
 
     @Test
-    void shouldThrowExceptionIfTheApproverLoginGivesWrongPassword() {
-        assertThrows(LoginInvalidException.class, () -> leaveManagement.validateLeaveRequest(4, "password2", organization));
+    void shouldThrowExceptionIfTheApproverGivesWrongPassword() {
+        assertThrows(LoginInvalidException.class, () -> leaveManagement.
+                validateLeaveRequest(4, "password2", organization));
     }
 
     @Test
@@ -85,11 +86,12 @@ class LeaveManagementTest {
         Date startDate = simpleDateFormat.parse("01-01-2019");
         Date endDate = simpleDateFormat.parse("05-01-2019");
         Leave leave = new Leave(startDate, endDate);
-        assertThrows(DateInvalidException.class, () -> leaveManagement.applyLeave(1, "password1", organization, leave));
+        assertThrows(DateInvalidException.class, () -> leaveManagement.
+                applyLeave(1, "password1", organization, leave));
     }
 
     @Test
-    void shouldDeleteTheLeaveRequestWhenApproverVisitsThatLeaveRequest() {
+    void shouldDeleteTheLeaveRequestInApproverObjectWhenApproverVisitsThatLeaveRequest() {
         leaveManagement.applyLeave(1, "password1", organization, leave1);
         leaveManagement.validateLeaveRequest(4, "password4", organization);
         List<Leave> leaveRequests = approver1.getLeaveRequests();
@@ -97,14 +99,14 @@ class LeaveManagementTest {
     }
 
     @Test
-    void shouldNotAddLeaveInEmployeeObjectUntilApproverVisitsTheLeaveRequest() {
+    void shouldNotAddLeaveInEmployeeLeaveHistoryUntilApproverVisitsTheLeaveRequest() {
         leaveManagement.applyLeave(1, "password1", organization, leave1);
         List<Leave> leaves = employee1.getLeavesHistory();
         assertFalse(leaves.contains(leave1));
     }
 
     @Test
-    void shouldAddLeaveHistoryInEmployeeObjectWhenApproverApprovesTheLeaveRequest() {
+    void shouldAddLeaveInEmployeeLeaveHistoryWhenApproverApprovesTheLeaveRequest() {
         leaveManagement.applyLeave(1, "password1", organization, leave1);
         leaveManagement.validateLeaveRequest(4, "password4", organization);
         List<Leave> leaveHistory = employee1.getLeavesHistory();

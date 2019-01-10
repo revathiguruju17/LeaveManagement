@@ -15,13 +15,13 @@ class OrganizationTest {
     private Organization organization;
 
     @BeforeEach
-    void init(){
+    void init() {
         organization = new Organization();
     }
 
     @Test
     void shouldReturnCorrectEmployeeWhenTheUserGivesValidID() {
-        Employee employee1 = new Employee(1,"password1", 2);
+        Employee employee1 = new Employee(1, "password1");
         organization.addEmployee(employee1);
         assertEquals(employee1, organization.getEmployee(1));
     }
@@ -32,10 +32,10 @@ class OrganizationTest {
     }
 
     @Test
-    void shouldReturnCorrectApproverWhenApproverGivesValidID(){
-        Approver approver1 = new Approver(2,"password1", 3);
+    void shouldReturnCorrectApproverWhenApproverGivesValidID() {
+        Approver approver1 = new Approver(2, "password1");
         organization.addEmployee(approver1);
-        assertEquals(approver1,organization.getEmployee(2));
+        assertEquals(approver1, organization.getEmployee(2));
     }
 
     @Test
@@ -43,19 +43,18 @@ class OrganizationTest {
         assertThrows(LoginInvalidException.class, () -> organization.getEmployee(1));
     }
 
-
     @Test
-    void shouldReturnEmptyLeaveHistoryOfEmployeeIfTheDateIsNotMatched() throws ParseException{
+    void shouldReturnEmptyLeaveHistoryOfEmployeeIfTheDateIsNotMatched() throws ParseException {
         Employee employee = Mockito.mock(Employee.class);
         organization.addEmployee(employee);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date startDate = simpleDateFormat.parse("21-01-2018");
         Date endDate = simpleDateFormat.parse("23-01-2018");
-        Leave leave = new Leave(startDate,endDate);
+        Leave leave = new Leave(startDate, endDate);
         List<Leave> leaves = new ArrayList<>();
         leaves.add(leave);
         when(employee.getLeavesHistory()).thenReturn(leaves);
-        List<Leave> result =organization.getEmployeesLeaveHistoryBasedOnDate(simpleDateFormat.parse("25-01-2018"));
+        List<Leave> result = organization.getEmployeesLeaveHistoryBasedOnDate(simpleDateFormat.parse("25-01-2018"));
         assertTrue(result.isEmpty());
     }
 
@@ -66,27 +65,27 @@ class OrganizationTest {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date startDate = simpleDateFormat.parse("21-01-2019");
         Date endDate = simpleDateFormat.parse("23-01-2019");
-        Leave leave = new Leave(startDate,endDate);
+        Leave leave = new Leave(startDate, endDate);
         List<Leave> expected = new ArrayList<>();
         expected.add(leave);
         when(employee1.getLeavesHistory()).thenReturn(expected);
-        List<Leave> result =organization.getEmployeesLeaveHistoryBasedOnDate(startDate);
+        List<Leave> result = organization.getEmployeesLeaveHistoryBasedOnDate(startDate);
         assertTrue(result.contains(leave));
-        assertEquals(1,result.size());
+        assertEquals(1, result.size());
     }
 
     @Test
-    void shouldReturnEmptyLeaveHistoryOfApproverIfTheDateIsNotMatched() throws ParseException{
+    void shouldReturnEmptyLeaveHistoryOfApproverIfTheDateIsNotMatched() throws ParseException {
         Employee approver = Mockito.mock(Approver.class);
         organization.addEmployee(approver);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date startDate = simpleDateFormat.parse("21-01-2018");
         Date endDate = simpleDateFormat.parse("23-01-2018");
-        Leave leave = new Leave(startDate,endDate);
+        Leave leave = new Leave(startDate, endDate);
         List<Leave> leaves = new ArrayList<>();
         leaves.add(leave);
         when(approver.getLeavesHistory()).thenReturn(leaves);
-        List<Leave> result =organization.getEmployeesLeaveHistoryBasedOnDate(simpleDateFormat.parse("25-01-2018"));
+        List<Leave> result = organization.getEmployeesLeaveHistoryBasedOnDate(simpleDateFormat.parse("25-01-2018"));
         assertTrue(result.isEmpty());
     }
 
@@ -97,10 +96,10 @@ class OrganizationTest {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date startDate = simpleDateFormat.parse("21-01-2019");
         Date endDate = simpleDateFormat.parse("23-01-2019");
-        Leave leave = new Leave(startDate,endDate);
+        Leave leave = new Leave(startDate, endDate);
         List<Leave> leaves = new ArrayList<>();
         leaves.add(leave);
         when(approver.getLeavesHistory()).thenReturn(leaves);
-        assertEquals(leaves,organization.getEmployeesLeaveHistoryBasedOnDate(startDate));
+        assertEquals(leaves, organization.getEmployeesLeaveHistoryBasedOnDate(startDate));
     }
 }

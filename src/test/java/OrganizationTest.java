@@ -102,4 +102,20 @@ class OrganizationTest {
         when(approver.getLeavesHistory()).thenReturn(leaves);
         assertEquals(leaves, organization.getEmployeesLeaveHistoryBasedOnDate(startDate));
     }
+
+    @Test
+    void shouldReturnApproverIfTheApproverHasTheLeaveRequesterID(){
+        Employee approver = Mockito.mock(Approver.class);
+        organization.addEmployee(approver);
+        when(approver.checkLeaveRequester(1)).thenReturn(true);
+        assertEquals(approver,organization.getApprover(1));
+    }
+
+    @Test
+    void shouldReturnNullIfTheApproverDoesNotHaveTheLeaveRequesterID(){
+        Employee approver = Mockito.mock(Approver.class);
+        organization.addEmployee(approver);
+        when(approver.checkLeaveRequester(1)).thenReturn(false);
+        assertNull(organization.getApprover(1));
+    }
 }

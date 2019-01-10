@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class Approver extends Employee {
+ class Approver extends Employee {
 
     private List<Leave> leaveRequests;
     private List<Integer> leaveRequesters;
@@ -12,7 +12,8 @@ class Approver extends Employee {
         this.leaveRequesters = new ArrayList<>();
     }
 
-    LeaveState approveLeave(int numberOfLeavesLeft, int numberOfLeavesWant) {
+    @Override
+    public LeaveState approveLeave(int numberOfLeavesLeft, int numberOfLeavesWant) {
         if (numberOfLeavesLeft == 0) {
             return LeaveState.REJECTED;
         } else if (numberOfLeavesLeft >= numberOfLeavesWant)
@@ -30,7 +31,8 @@ class Approver extends Employee {
         leaveRequesters.add(ID);
     }
 
-    List<Leave> getLeaveRequests() {
+    @Override
+    public List<Leave> getLeaveRequests() {
         return leaveRequests;
     }
 

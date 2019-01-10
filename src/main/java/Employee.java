@@ -60,4 +60,12 @@ class Employee {
         return false;
     }
 
+
+    public List<Leave> getLeaveRequests() {
+        return null;
+    }
+
+    public LeaveState approveLeave(int numberOfLeavesLeft, int numberOfLeaves) {
+        return null;
+    }
 }

@@ -27,7 +27,7 @@ class LeaveManagement {
     }
 
     void validateLeaveRequest(int approverID, String password, Organization organization) {
-        Approver approver = (Approver) organization.getEmployee(approverID);
+        Employee approver =  organization.getEmployee(approverID);
         approver.login(password);
         List<Leave> leaveRequests = approver.getLeaveRequests();
         while (leaveRequests.size() != 0) {

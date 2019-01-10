@@ -15,7 +15,7 @@ class LeaveManagement {
         if (!isDateValid) {
             throw new DateInvalidException("invalid date");
         }
-        Approver approver = organization.getApprover(employeeID);
+        Employee approver = organization.getApprover(employee);
         leave.setEmployeeID(employeeID);
         approver.addLeaveRequest(leave);
     }
@@ -27,7 +27,7 @@ class LeaveManagement {
     }
 
     void validateLeaveRequest(int approverID, String password, Organization organization) {
-        Employee approver =  organization.getEmployee(approverID);
+        Employee approver = organization.getEmployee(approverID);
         approver.login(password);
         List<Leave> leaveRequests = approver.getLeaveRequests();
         while (leaveRequests.size() != 0) {

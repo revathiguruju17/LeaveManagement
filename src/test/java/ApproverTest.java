@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,12 +42,14 @@ class ApproverTest {
 
     @Test
     void shouldReturnTrueIfTheApproverHasLeaveRequesterID(){
-        approver.addLeaveRequester(1);
-        assertTrue(approver.checkLeaveRequester(1));
+        Employee employee = Mockito.mock(Employee.class);
+        approver.addLeaveRequester(employee);
+        assertTrue(approver.checkLeaveRequester(employee));
     }
 
     @Test
     void shouldReturnFalseIfTheApproverDoesNotHaveLeaveRequesterID(){
-        assertFalse(approver.checkLeaveRequester(1));
+        Employee employee = Mockito.mock(Employee.class);
+        assertFalse(approver.checkLeaveRequester(employee));
     }
 }

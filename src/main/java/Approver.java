@@ -1,15 +1,15 @@
 import java.util.ArrayList;
 import java.util.List;
 
- class Approver extends Employee {
+class Approver extends Employee {
 
     private List<Leave> leaveRequests;
-    private List<Integer> leaveRequesters;
+    private List<Employee> observers;
 
     Approver(int ID, String password) {
         super(ID, password);
         this.leaveRequests = new ArrayList<>();
-        this.leaveRequesters = new ArrayList<>();
+        this.observers = new ArrayList<>();
     }
 
     @Override
@@ -23,12 +23,14 @@ import java.util.List;
         }
     }
 
-    void addLeaveRequest(Leave leave) {
+    @Override
+    public void addLeaveRequest(Leave leave) {
         leaveRequests.add(leave);
     }
 
-    void addLeaveRequester(int ID) {
-        leaveRequesters.add(ID);
+    @Override
+    public void addLeaveRequester(Employee employee) {
+        observers.add(employee);
     }
 
     @Override
@@ -37,12 +39,7 @@ import java.util.List;
     }
 
     @Override
-    boolean checkLeaveRequester(int ID) {
-        for (int requestor : leaveRequesters) {
-            if (requestor == ID) {
-                return true;
-            }
-        }
-        return false;
+    boolean checkLeaveRequester(Employee employee) {
+        return this.observers.contains(employee);
     }
 }

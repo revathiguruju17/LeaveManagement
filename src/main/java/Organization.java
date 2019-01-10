@@ -5,7 +5,6 @@ import java.util.List;
 class Organization {
     private List<Employee> employees;
 
-
     Organization() {
         employees = new ArrayList<>();
     }
@@ -36,10 +35,10 @@ class Organization {
         return leaves;
     }
 
-    Approver getApprover(int employeeID) {
-        for (Employee employee : employees) {
-            if (employee.checkLeaveRequester(employeeID)) {
-                return (Approver) employee;
+    Employee getApprover(Employee employee) {
+        for (Employee approver : employees) {
+            if (approver.checkLeaveRequester(employee)) {
+                return approver;
             }
         }
         return null;

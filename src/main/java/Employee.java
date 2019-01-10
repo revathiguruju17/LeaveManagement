@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class Employee {
+class Employee  {
     private int ID;
     private String password;
     private EmployeeState employeeState;
@@ -56,7 +56,8 @@ class Employee {
         return numberOfAnnualLeavesLeft;
     }
 
-    boolean checkLeaveRequester(int ID) {
+    boolean
+    checkLeaveRequester(Employee employee) {
         return false;
     }
 
@@ -67,5 +68,11 @@ class Employee {
 
     public LeaveState approveLeave(int numberOfLeavesLeft, int numberOfLeaves) {
         return null;
+    }
+
+    public void addLeaveRequest(Leave leave) {
+    }
+
+    public void addLeaveRequester(Employee employee) {
     }
 }

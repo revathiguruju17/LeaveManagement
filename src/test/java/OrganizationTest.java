@@ -104,18 +104,21 @@ class OrganizationTest {
     }
 
     @Test
-    void shouldReturnApproverIfTheApproverHasTheLeaveRequesterID(){
+    void shouldReturnApproverIfTheApproverHasTheLeaveRequester(){
+        Employee employee = Mockito.mock(Employee.class);
         Employee approver = Mockito.mock(Approver.class);
         organization.addEmployee(approver);
-        when(approver.checkLeaveRequester(1)).thenReturn(true);
-        assertEquals(approver,organization.getApprover(1));
+        approver.addLeaveRequester(employee);
+        when(approver.checkLeaveRequester(employee)).thenReturn(true);
+        assertEquals(approver,organization.getApprover(employee));
     }
 
     @Test
-    void shouldReturnNullIfTheApproverDoesNotHaveTheLeaveRequesterID(){
+    void shouldReturnNullIfTheApproverDoesNotHaveTheLeaveRequester(){
+        Employee employee = Mockito.mock(Employee.class);
         Employee approver = Mockito.mock(Approver.class);
         organization.addEmployee(approver);
-        when(approver.checkLeaveRequester(1)).thenReturn(false);
-        assertNull(organization.getApprover(1));
+        when(approver.checkLeaveRequester(employee)).thenReturn(false);
+        assertNull(organization.getApprover(employee));
     }
 }

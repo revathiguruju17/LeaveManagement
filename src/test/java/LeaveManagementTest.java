@@ -32,9 +32,9 @@ class LeaveManagementTest {
         Employee employee2 = new Employee(2, "password2");
         Employee employee3 = new Employee(3, "password3");
         approver1 = new Approver(4, "password4");
-        approver1.addLeaveRequester(1);
-        approver1.addLeaveRequester(2);
-        approver1.addLeaveRequester(3);
+        approver1.addLeaveRequester(employee1);
+        approver1.addLeaveRequester(employee2);
+        approver1.addLeaveRequester(employee3);
         organization.addEmployee(employee1);
         organization.addEmployee(employee2);
         organization.addEmployee(employee3);

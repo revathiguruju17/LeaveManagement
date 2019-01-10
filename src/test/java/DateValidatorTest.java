@@ -39,8 +39,8 @@ class DateValidatorTest {
 
     @Test
     void shouldReturnTrueIfTheStartDateAndEndDateIsEqualAndGreaterThanCurrentDate() throws ParseException{
-        Date startDate = simpleDateFormat.parse("09-01-2019");
-        Date endDate = simpleDateFormat.parse("09-01-2019");
+        Date startDate = simpleDateFormat.parse("12-01-2019");
+        Date endDate = simpleDateFormat.parse("12-01-2019");
         assertTrue(DateValidator.checkWhetherTheLeaveAppliedIsForFutureOrNot(startDate, endDate));
     }
 

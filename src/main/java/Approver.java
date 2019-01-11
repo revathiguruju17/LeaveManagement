@@ -3,13 +3,11 @@ import java.util.List;
 
 class Approver extends Employee {
 
-    private List<Leave> leaveRequests;
-    private List<Employee> leaveAppliers;
+    private List<Integer> employees;
 
     Approver(int ID, String password) {
         super(ID, password);
-        this.leaveRequests = new ArrayList<>();
-        this.leaveAppliers = new ArrayList<>();
+        employees = new ArrayList<>();
     }
 
     @Override
@@ -24,20 +22,11 @@ class Approver extends Employee {
     }
 
     @Override
-    public void addLeaveRequest(Leave leave) { leaveRequests.add(leave); }
-
-    @Override
-    public void addLeaveRequester(Employee employee) {
-        leaveAppliers.add(employee);
+    List<Integer> getEmployeesOfTheApprover() {
+        return employees;
     }
 
-    @Override
-    public List<Leave> getLeaveRequests() {
-        return leaveRequests;
-    }
-
-    @Override
-    boolean checkLeaveRequester(Employee employee) {
-        return this.leaveAppliers.contains(employee);
+    void addEmployeeToTheApprover(int employeeID){
+        employees.add(employeeID);
     }
 }

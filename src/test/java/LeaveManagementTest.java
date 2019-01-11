@@ -13,38 +13,23 @@ class LeaveManagementTest {
     private Organization organization;
     private SimpleDateFormat simpleDateFormat;
     private Leave leave1;
-    private Leave leave2;
     private Approver approver1;
     private Employee employee1;
+    private Date startDate1;
 
     @BeforeEach
     void init() throws ParseException {
         simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Date startDate1 = simpleDateFormat.parse("22-01-2019");
+        startDate1 = simpleDateFormat.parse("22-01-2019");
         Date endDate1 = simpleDateFormat.parse("24-01-2019");
         leave1 = new Leave(startDate1, endDate1);
-        Date startDate2 = simpleDateFormat.parse("28-01-2019");
-        Date endDate2 = simpleDateFormat.parse("29-01-2019");
-        leave2 = new Leave(startDate2, endDate2);
         leaveManagement = new LeaveManagement();
         organization = new Organization();
         employee1 = new Employee(1, "password1");
-        Employee employee2 = new Employee(2, "password2");
-        Employee employee3 = new Employee(3, "password3");
         approver1 = new Approver(4, "password4");
-        approver1.addLeaveRequester(employee1);
-        approver1.addLeaveRequester(employee2);
-        approver1.addLeaveRequester(employee3);
+        approver1.addEmployeeToTheApprover(1);
         organization.addEmployee(employee1);
-        organization.addEmployee(employee2);
-        organization.addEmployee(employee3);
         organization.addEmployee(approver1);
-    }
-
-    @Test
-    void shouldReturnEmptyListIfTheEmployeeDoesNotApplyForALeave() {
-        List<Leave> leaves = leaveManagement.getAnEmployeeLeaveHistory(1, "password1", organization);
-        assertTrue(leaves.isEmpty());
     }
 
     @Test
@@ -54,62 +39,88 @@ class LeaveManagementTest {
     }
 
     @Test
-    void shouldReturnAllEmployeeLeavesBasesOnTheGivenDate() throws ParseException {
-        leaveManagement.applyLeave(1, "password1", organization, leave1);
-        leaveManagement.applyLeave(2, "password2", organization, leave2);
-        leaveManagement.applyLeave(3, "password3", organization, leave2);
-        leaveManagement.validateLeaveRequest(4, "password4", organization);
-        List<Leave> leaves = leaveManagement.getAllEmployeesLeaveHistoryBasedOnGivenDate
-                (simpleDateFormat.parse("23-01-2019"), organization, 4, "password4");
-        assertEquals(leave1, leaves.get(0));
+    void shouldAddLeaveToTheLeaveManagementIfTheValidEmployeeAppliesForALeave(){
+        leaveManagement.applyLeave(1,"password1",organization,leave1);
+        assertTrue(leaveManagement.checkLeaveRequests(leave1));
     }
 
     @Test
-    void shouldThrowExceptionIfTheApproverGivesWrongPassword() {
-        assertThrows(LoginInvalidException.class, () -> leaveManagement.
-                validateLeaveRequest(4, "password2", organization));
-    }
-
-    @Test
-    void shouldAddLeaveRequestsInTheApproverWhenAnEmployeeApplyForALeave() {
-        leaveManagement.applyLeave(1, "password1", organization, leave1);
-        leaveManagement.applyLeave(2, "password2", organization, leave1);
-        leaveManagement.applyLeave(3, "password3", organization, leave1);
-        List<Leave> leaveRequests = approver1.getLeaveRequests();
-        assertEquals(leave1, leaveRequests.get(0));
-        assertEquals(leave1, leaveRequests.get(1));
-        assertEquals(leave1, leaveRequests.get(2));
-    }
-
-    @Test
-    void shouldThrowExceptionIfTheEmployeeGivesInvalidDateWhileApplyingLeave() throws ParseException {
-        Date startDate = simpleDateFormat.parse("01-01-2019");
-        Date endDate = simpleDateFormat.parse("05-01-2019");
+    void shouldThrowAnExceptionIfTheEmployeeAppliesALeaveWithInvalidDate() throws ParseException{
+        Date startDate = simpleDateFormat.parse("20-01-2018");
+        Date endDate = simpleDateFormat.parse("24-01-2018");
         Leave leave = new Leave(startDate, endDate);
-        assertThrows(DateInvalidException.class, () -> leaveManagement.
-                applyLeave(1, "password1", organization, leave));
+        assertThrows(DateInvalidException.class,()->leaveManagement.applyLeave(1,"password1",organization,leave));
     }
 
     @Test
-    void shouldDeleteTheLeaveRequestInApproverObjectWhenApproverVisitsThatLeaveRequest() {
-        leaveManagement.applyLeave(1, "password1", organization, leave1);
-        leaveManagement.validateLeaveRequest(4, "password4", organization);
-        List<Leave> leaveRequests = approver1.getLeaveRequests();
-        assertTrue(leaveRequests.isEmpty());
+    void shouldNotValidateLeaveRequestIfTheApproverPasswordIsInvalid(){
+        assertThrows(LoginInvalidException.class,()->leaveManagement.validateLeaveRequests(4,"password",organization));
     }
 
     @Test
-    void shouldNotAddLeaveInEmployeeLeaveHistoryUntilApproverVisitsTheLeaveRequest() {
-        leaveManagement.applyLeave(1, "password1", organization, leave1);
-        List<Leave> leaves = employee1.getLeavesHistory();
-        assertFalse(leaves.contains(leave1));
+    void shouldThrowIllegalAccessExceptionIfTheEmployeeTriesToValidateLeaveRequests(){
+        assertThrows(IllegalAccessException.class,()->leaveManagement.validateLeaveRequests(1,"password1",organization));
     }
 
     @Test
-    void shouldAddLeaveInEmployeeLeaveHistoryWhenApproverApprovesTheLeaveRequest() {
-        leaveManagement.applyLeave(1, "password1", organization, leave1);
-        leaveManagement.validateLeaveRequest(4, "password4", organization);
-        List<Leave> leaveHistory = employee1.getLeavesHistory();
+    void shouldValidLeaveRequestsIfTheUserIsValidApprover() throws IllegalAccessException{
+        leaveManagement.applyLeave(1,"password1",organization,leave1);
+        leaveManagement.validateLeaveRequests(4,"password4",organization);
+        assertTrue(leaveManagement.checkLeaveHistory(leave1));
+        assertFalse(leaveManagement.checkLeaveRequests(leave1));
+    }
+
+    @Test
+    void shouldNotAddLeaveToTheLeaveHistoryIfTheLeaveIsRejectedByTheApprover() throws ParseException, IllegalAccessException{
+        Date startDate = simpleDateFormat.parse("10-02-2019");
+        Date endDate = simpleDateFormat.parse("20-02-2019");
+        Leave leave = new Leave(startDate, endDate);
+        Date startDate1 = simpleDateFormat.parse("10-03-2019");
+        Date endDate1 = simpleDateFormat.parse("13-03-2019");
+        Leave leave1 = new Leave(startDate1, endDate1);
+        leaveManagement.applyLeave(1,"password1",organization,leave);
+        leaveManagement.applyLeave(1,"password1",organization,leave1);
+        leaveManagement.validateLeaveRequests(4,"password4",organization);
+        assertFalse(leaveManagement.checkLeaveHistory(leave1));
+    }
+
+    @Test
+    void shouldThrowAnExceptionIfTheInvalidApproverTriesToSeeAllEmployeesHistory(){
+        assertThrows(IllegalAccessException.class,()->leaveManagement.getLeaveHistoryOfEmployeeBasedOnTheDate(startDate1,1,"password1",organization));
+    }
+
+    @Test
+    void shouldThrowAnExceptionIfTheApproverGivesInvalidPasswordToSeeLeaveHistory(){
+        assertThrows(LoginInvalidException.class,()->leaveManagement.getLeaveHistoryOfEmployeeBasedOnTheDate(startDate1,4,"password1",organization));
+    }
+
+    @Test
+    void shouldReturnTheLeaveHistoryBasedOnTheDateIfTheEmployeeIsAValidApprover() throws IllegalAccessException{
+        leaveManagement.applyLeave(1,"password1",organization,leave1);
+        leaveManagement.validateLeaveRequests(4,"password4",organization);
+        List<Leave> leaveHistory = leaveManagement.getLeaveHistoryOfEmployeeBasedOnTheDate(startDate1,4,"password4",organization);
+        assertTrue(leaveHistory.contains(leave1));
+    }
+
+    @Test
+    void shouldReturnEmptyLeaveHistoryIfTheDateIsNotMatched() throws IllegalAccessException, ParseException{
+        leaveManagement.applyLeave(1,"password1",organization,leave1);
+        leaveManagement.validateLeaveRequests(4,"password4",organization);
+        Date date = simpleDateFormat.parse("06-09-2019");
+        List<Leave> leaveHistory = leaveManagement.getLeaveHistoryOfEmployeeBasedOnTheDate(date,4,"password4",organization);
+        assertTrue(leaveHistory.isEmpty());
+    }
+
+    @Test
+    void shouldThrowAnExceptionIfTheUserTriesToLoginWithWrongPasswordToSeeLeaveHistory(){
+        assertThrows(LoginInvalidException.class,()->leaveManagement.getLeaveHistoryOfEmployee(1,"password",organization));
+    }
+
+    @Test
+    void shouldReturnLeaveHistoryIfTheEmployeeEntersValidPassword() throws IllegalAccessException{
+        leaveManagement.applyLeave(1,"password1",organization,leave1);
+        leaveManagement.validateLeaveRequests(4,"password4",organization);
+        List<Leave> leaveHistory = leaveManagement.getLeaveHistoryOfEmployee(1,"password1",organization);
         assertTrue(leaveHistory.contains(leave1));
     }
 }

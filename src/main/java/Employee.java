@@ -1,31 +1,26 @@
-import java.util.ArrayList;
 import java.util.List;
 
-class Employee  {
+class Employee {
     private int ID;
     private String password;
     private EmployeeState employeeState;
 
     private int numberOfAnnualLeavesLeft;
-    private List<Leave> leavesHistory;
 
     Employee(int ID, String password) {
         this.ID = ID;
         this.password = password;
         this.employeeState = EmployeeState.LOGOUT;
         this.numberOfAnnualLeavesLeft = 10;
-        leavesHistory = new ArrayList<>();
-    }
-
-    List<Leave> getLeavesHistory() {
-        return leavesHistory;
     }
 
     EmployeeState getState() {
         return this.employeeState;
     }
 
-    boolean checkID(int id) { return id == this.ID; }
+    boolean checkID(int id) {
+        return id == this.ID;
+    }
 
     void updateNoOfLeavesLeft(LeaveState leaveState, int numberOfAnnualLeavesTaken) {
         if (leaveState == LeaveState.APPROVED) {
@@ -42,27 +37,20 @@ class Employee  {
         this.employeeState = EmployeeState.LOGIN;
     }
 
-    void logout() { employeeState = EmployeeState.LOGOUT; }
-
-    void addLeaveToLeaveHistory(Leave leave) { this.leavesHistory.add(leave); }
+    void logout() {
+        employeeState = EmployeeState.LOGOUT;
+    }
 
     int getNumberOfLeavesLeft() {
         return numberOfAnnualLeavesLeft;
-    }
-
-    boolean checkLeaveRequester(Employee employee) {
-        return false;
-    }
-
-    public List<Leave> getLeaveRequests() {
-        return null;
     }
 
     public LeaveState approveLeave(int numberOfLeavesLeft, int numberOfLeaves) {
         return null;
     }
 
-    public void addLeaveRequest(Leave leave) { }
 
-    public void addLeaveRequester(Employee employee) { }
+    List<Integer> getEmployeesOfTheApprover() {
+        return null;
+    }
 }

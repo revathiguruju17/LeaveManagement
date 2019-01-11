@@ -1,8 +1,8 @@
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 class Organization {
+
     private List<Employee> employees;
 
     Organization() {
@@ -20,27 +20,5 @@ class Organization {
             }
         }
         throw new LoginInvalidException("Id is invalid");
-    }
-
-    List<Leave> getEmployeesLeaveHistoryBasedOnDate(Date date) {
-        List<Leave> leaves = new ArrayList<>();
-        for (Employee employee : employees) {
-            List<Leave> employeeLeaves = employee.getLeavesHistory();
-            for (Leave leave : employeeLeaves) {
-                if (date.compareTo(leave.getStartDate()) >= 0 && leave.getEndDate().compareTo(date) >= 0) {
-                    leaves.add(leave);
-                }
-            }
-        }
-        return leaves;
-    }
-
-    Employee getApprover(Employee employee) {
-        for (Employee approver : employees) {
-            if (approver.checkLeaveRequester(employee)) {
-                return approver;
-            }
-        }
-        return null;
     }
 }

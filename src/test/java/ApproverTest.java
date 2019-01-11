@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,18 +37,5 @@ class ApproverTest {
     void shouldChangeTheApproverStateWhenLogout() {
         approver.logout();
         assertEquals(EmployeeState.LOGOUT, approver.getState());
-    }
-
-    @Test
-    void shouldReturnTrueIfTheApproverHasLeaveRequesterID(){
-        Employee employee = Mockito.mock(Employee.class);
-        approver.addLeaveRequester(employee);
-        assertTrue(approver.checkLeaveRequester(employee));
-    }
-
-    @Test
-    void shouldReturnFalseIfTheApproverDoesNotHaveLeaveRequesterID(){
-        Employee employee = Mockito.mock(Employee.class);
-        assertFalse(approver.checkLeaveRequester(employee));
     }
 }

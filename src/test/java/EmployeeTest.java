@@ -1,17 +1,13 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeTest {
     private Employee employee;
-    private Leave leave;
 
     @BeforeEach
     void init() {
         employee = new Employee(1, "password1");
-        leave = Mockito.mock(Leave.class);
     }
 
     @Test
@@ -39,17 +35,6 @@ class EmployeeTest {
     @Test
     void shouldReturnFalseIfTheIDIsInValid(){
         assertFalse(employee.checkID(2));
-    }
-
-    @Test
-    void shouldReturnEmptyListIfTheEmployeeLeaveHistoryIsNull(){
-        assertTrue(employee.getLeavesHistory().isEmpty());
-    }
-
-    @Test
-    void shouldReturnLeaveHistoryIfTheEmployeeHasLeaveHistory(){
-        employee.addLeaveToLeaveHistory(leave);
-        assertTrue(employee.getLeavesHistory().contains(leave));
     }
 
     @Test

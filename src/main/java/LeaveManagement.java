@@ -54,7 +54,8 @@ class LeaveManagement {
         return leaves;
     }
 
-    List<Leave> getLeaveHistoryOfEmployeeBasedOnTheDate(Date date, int ID, String password, Organization organization) throws IllegalAccessException {
+    List<Leave> getLeaveHistoryOfEmployeeBasedOnTheDate(Date date, int ID, String password,
+                                                        Organization organization) throws IllegalAccessException {
         Employee employee = organization.getEmployee(ID);
         if (!EmployeeAuthentication.checkValidApprover(employee)) {
             throw new IllegalAccessException();
@@ -87,6 +88,5 @@ class LeaveManagement {
 
     boolean checkLeaveHistory(Leave leave) {
         return leaveHistory.contains(leave);
-
     }
 }

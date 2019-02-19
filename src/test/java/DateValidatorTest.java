@@ -25,29 +25,29 @@ class DateValidatorTest {
 
     @Test
     void shouldReturnFalseIfTheStartDateIsGreaterThanEndDate() throws ParseException{
-        Date startDate = simpleDateFormat.parse("21-01-2019");
+        Date startDate = simpleDateFormat.parse("21-01-2029");
         Date endDate = simpleDateFormat.parse("13-01-2018");
         assertFalse(DateValidator.checkWhetherTheLeaveAppliedIsForFutureOrNot(startDate, endDate));
     }
 
     @Test
     void shouldReturnTrueIfTheStartDateAndEndDateIsNotPast() throws ParseException{
-        Date startDate = simpleDateFormat.parse("12-02-2019");
-        Date endDate = simpleDateFormat.parse("13-02-2019");
+        Date startDate = simpleDateFormat.parse("12-02-2029");
+        Date endDate = simpleDateFormat.parse("13-02-2029");
         assertTrue(DateValidator.checkWhetherTheLeaveAppliedIsForFutureOrNot(startDate, endDate));
     }
 
     @Test
     void shouldReturnTrueIfTheStartDateAndEndDateIsEqualAndGreaterThanCurrentDate() throws ParseException{
-        Date startDate = simpleDateFormat.parse("12-01-2019");
-        Date endDate = simpleDateFormat.parse("12-01-2019");
+        Date startDate = simpleDateFormat.parse("12-01-2029");
+        Date endDate = simpleDateFormat.parse("12-01-2029");
         assertTrue(DateValidator.checkWhetherTheLeaveAppliedIsForFutureOrNot(startDate, endDate));
     }
 
     @Test
     void shouldReturnFalseIfTheStartDateIsGreaterThanEndDateAndIsPast() throws ParseException{
-        Date startDate = simpleDateFormat.parse("29-12-2018");
-        Date endDate = simpleDateFormat.parse("27-12-2018");
+        Date startDate = simpleDateFormat.parse("29-12-2028");
+        Date endDate = simpleDateFormat.parse("27-12-2028");
         assertFalse(DateValidator.checkWhetherTheLeaveAppliedIsForFutureOrNot(startDate, endDate));
     }
 }
